@@ -10,7 +10,18 @@ url: ""
 # Build settings
 markdown: kramdown
 highlighter: rouge
-theme: minima
+theme: jekyll-theme-hacker
+
+# Site settings
+show_excerpts: true
+excerpt_separator: "<!-- more -->"
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: Proposal
+    url: /proposal/
 
 # Plugins (GitHub Pages compatible)
 plugins:
