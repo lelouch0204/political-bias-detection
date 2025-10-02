@@ -1,0 +1,23 @@
+title: CS 7641 Group 29 ML Project
+description: Machine Learning Group Project for CS 7641
+author: CS 7641 Group 29
+email: nparikh44@gatech.edu
+
+# GitHub Pages settings
+baseurl: ""
+url: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+theme: minima
+
+# Plugins (GitHub Pages compatible)
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Exclude from processing
+exclude:
+  - README.md
