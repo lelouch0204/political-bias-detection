@@ -5,14 +5,22 @@ title: CS 7641 Group 29 ML Project
 
 # CS 7641 Group 29 Machine Learning Project
 
+<div class="hero-section">
+
 > **Welcome to our CS 7641 group project repository!**  
 > Exploring cutting-edge machine learning techniques for real-world applications.
+
+</div>
 
 ---
 
 ## 🎯 Project Overview
 
+<div class="info-box">
+
 This repository contains our comprehensive machine learning project for **CS 7641 - Machine Learning**. We are developing and implementing state-of-the-art ML algorithms to solve [brief description of your project topic].
+
+</div>
 
 ### Key Objectives
 - Implement and compare multiple ML algorithms
@@ -24,13 +32,42 @@ This repository contains our comprehensive machine learning project for **CS 764
 
 ## 📋 Project Components
 
-| Component | Status | Description |
-|-----------|--------|-------------|
-| 📊 **Data Collection** | ⏳ Pending | Gathering and preparing dataset |
-| 🔧 **Preprocessing** | ⏳ Pending | Feature engineering and data cleaning |
-| 🤖 **Model Development** | ⏳ Pending | Implementing ML algorithms |
-| 📈 **Evaluation** | ⏳ Pending | Performance analysis and comparison |
-| 📝 **Documentation** | 🔄 In Progress | Comprehensive project documentation |
+<table class="project-table">
+<thead>
+<tr>
+<th>Component</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>📊 <strong>Data Collection</strong></td>
+<td class="status-pending">⏳ Pending</td>
+<td>Gathering and preparing dataset</td>
+</tr>
+<tr>
+<td>🔧 <strong>Preprocessing</strong></td>
+<td class="status-pending">⏳ Pending</td>
+<td>Feature engineering and data cleaning</td>
+</tr>
+<tr>
+<td>🤖 <strong>Model Development</strong></td>
+<td class="status-pending">⏳ Pending</td>
+<td>Implementing ML algorithms</td>
+</tr>
+<tr>
+<td>📈 <strong>Evaluation</strong></td>
+<td class="status-pending">⏳ Pending</td>
+<td>Performance analysis and comparison</td>
+</tr>
+<tr>
+<td>📝 <strong>Documentation</strong></td>
+<td class="status-warning">🔄 In Progress</td>
+<td>Comprehensive project documentation</td>
+</tr>
+</tbody>
+</table>
 
 ---
 
@@ -48,9 +85,9 @@ This repository contains our comprehensive machine learning project for **CS 764
 
 ## 📚 Navigation
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+<div class="nav-cards">
 
-<div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background-color: #f9f9f9;">
+<div class="nav-card">
 
 ### 📖 Project Proposal
 **[View Full Proposal](proposal/)**
@@ -63,7 +100,7 @@ Complete project proposal including:
 
 </div>
 
-<div style="border: 1px solid #ddd; padding: 15px; border-radius: 8px; background-color: #f9f9f9;">
+<div class="nav-card">
 
 ### 💻 Repository
 **[GitHub Repository](https://github.com/your-username/cs-7641-group-29)**
@@ -88,6 +125,8 @@ Source code and additional materials:
 
 ---
 
+<div class="contact-section">
+
 ## 📞 Contact
 
 For questions about this project, please contact:
@@ -95,6 +134,8 @@ For questions about this project, please contact:
 **Email**: [nparikh44@gatech.edu](mailto:nparikh44@gatech.edu)  
 **Course**: CS 7641 - Machine Learning  
 **Institution**: Georgia Institute of Technology
+
+</div>
 
 ---
 

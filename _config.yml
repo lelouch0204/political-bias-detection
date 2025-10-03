@@ -10,7 +10,17 @@ url: ""
 # Build settings
 markdown: kramdown
 highlighter: rouge
-remote_theme: pages-themes/cayman@v0.2.0
+theme: minima
+
+# Minima theme customization
+minima:
+  skin: default
+  color_scheme: light
+
+# Custom CSS
+sass:
+  sass_dir: assets/css
+  style: compressed
 
 # Site settings
 show_excerpts: true
@@ -28,7 +38,6 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
-  - jekyll-remote-theme
 
 # Exclude from processing
 exclude:
