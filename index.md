@@ -7,8 +7,10 @@ title: CS 7641 Group 29 ML Project
 
 <div class="hero-section">
 
-> **Welcome to our CS 7641 group project repository!**  
-> Exploring cutting-edge machine learning techniques for real-world applications.
+<blockquote>
+<p><strong>Welcome to our CS 7641 group project repository!</strong><br>
+Exploring cutting-edge machine learning techniques for real-world applications.</p>
+</blockquote>
 
 </div>
 
@@ -75,11 +77,13 @@ This repository contains our comprehensive machine learning project for **CS 764
 
 *[Add your team member names and contact information]*
 
-| Name | Role | Contact |
-|------|------|---------|
-| [Your Name] | [Role] | [email@gatech.edu] |
-| [Teammate 1] | [Role] | [email@gatech.edu] |
-| [Teammate 2] | [Role] | [email@gatech.edu] |
+| Name | Contact |
+|------|---------|
+| Bhumika Chopra | bchopra@gatech.edu |
+| Carla Du Plessis | cplessis6@gatech.edu |
+| Chaithanya Shyam Delanthabettu | csd3@gatech.edu |
+| Nandan Bharatkumar Parikh | nparikh44@gatech.edu |
+| Sonika Vuyyuru | svuyyuru7@gatech.edu |
 
 ---
 
@@ -89,27 +93,31 @@ This repository contains our comprehensive machine learning project for **CS 764
 
 <div class="nav-card">
 
-### 📖 Project Proposal
-**[View Full Proposal](proposal/)**
+<h3>📖 Project Proposal</h3>
+<p><strong><a href="proposal/">View Full Proposal</a></strong></p>
 
-Complete project proposal including:
-- Literature review and background
-- Problem definition and motivation
-- Detailed methodology and algorithms
-- Expected results and metrics
+<p>Complete project proposal including:</p>
+<ul>
+<li>Literature review and background</li>
+<li>Problem definition and motivation</li>
+<li>Detailed methodology and algorithms</li>
+<li>Expected results and metrics</li>
+</ul>
 
 </div>
 
 <div class="nav-card">
 
-### 💻 Repository
-**[GitHub Repository](https://github.com/your-username/cs-7641-group-29)**
+<h3>💻 Repository</h3>
+<p><strong><a href="https://github.com/your-username/cs-7641-group-29">GitHub Repository</a></strong></p>
 
-Source code and additional materials:
-- Implementation files
-- Dataset and preprocessing scripts
-- Results and visualizations
-- Documentation
+<p>Source code and additional materials:</p>
+<ul>
+<li>Implementation files</li>
+<li>Dataset and preprocessing scripts</li>
+<li>Results and visualizations</li>
+<li>Documentation</li>
+</ul>
 
 </div>
 

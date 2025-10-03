@@ -7,20 +7,12 @@ email: nparikh44@gatech.edu
 baseurl: ""
 url: ""
 
+repository: nparikh44/cs-7641-group-29
+
 # Build settings
 markdown: kramdown
 highlighter: rouge
-theme: minima
-
-# Minima theme customization
-minima:
-  skin: default
-  color_scheme: light
-
-# Custom CSS
-sass:
-  sass_dir: assets/css
-  style: compressed
+theme: jekyll-theme-cayman
 
 # Site settings
 show_excerpts: true
