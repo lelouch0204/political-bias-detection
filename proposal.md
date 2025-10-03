@@ -3,8 +3,11 @@ layout: page
 title: ML Project Proposal
 permalink: /proposal/
 ---
-
-# CS 7641 Group Project Proposal
+ 
+<div class="hero-section">
+	<h1>CS 7641 Group Project Proposal</h1>
+	<blockquote>Compact project summary or tagline — replace this with a short description of your project.</blockquote>
+</div>
 
 ## Introduction/Background
 
