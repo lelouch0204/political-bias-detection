@@ -4,8 +4,9 @@ author: CS 7641 Group 29
 email: nparikh44@gatech.edu
 
 # GitHub Pages settings
-baseurl: ""
-url: ""
+# For your GitHub Enterprise Pages URL (https://github.gatech.edu/pages/nparikh44/cs-7641-group-29/)
+baseurl: "/pages/nparikh44/cs-7641-group-29"
+url: "https://github.gatech.edu"
 
 repository: nparikh44/cs-7641-group-29
 
