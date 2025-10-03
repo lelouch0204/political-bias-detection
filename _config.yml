@@ -10,7 +10,7 @@ url: ""
 # Build settings
 markdown: kramdown
 highlighter: rouge
-theme: jekyll-theme-hacker
+remote_theme: pages-themes/cayman@v0.2.0
 
 # Site settings
 show_excerpts: true
@@ -28,6 +28,7 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
   - jekyll-seo-tag
+  - jekyll-remote-theme
 
 # Exclude from processing
 exclude:
