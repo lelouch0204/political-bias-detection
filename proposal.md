@@ -21,7 +21,8 @@ We will utilize a combination of datasets to ensure robustness in our developed 
 - **BASIL** [9]: Provides event-level stance annotations for articles from Fox (Right), NYT (Center) and HuffPost (left), enabling fine-grained framing analysis.
 - **AllSides (Kaggle)** [10]: Large corpus of articles with outlet-level bias labels, for weak supervision and baseline model training
 - **GDELT Project [11]**: Massive, real-time global database of news, for outlet-level aggregation to proxy coverage bias
-- **Media Bias Fact Check (MBFC)** [12]: Outlet-level bias and factuality ratings across thousands of news domains. 
+- **Media Bias Fact Check (MBFC) [12]** : Outlet-level bias and factuality ratings across thousands of news domains. 
+
 ---
 
 ## Problem Definition
@@ -83,6 +84,7 @@ Our project introduces several novel components beyond standard bias classificat
 1. **Event-Level Contrastive Learning**: Use contrastive learning on articles about the same event to detect nuanced narrative differences (e.g. triplet loss) across outlets. 
 2. **Explainable and interpretable predictions**: Using model interpretability tools, we provide reasoning for each classification, highlighting which textual features and coverage decisions influenced the bias label; focusing on tone, selection, percentage of fact vs. opinion, and size biases. 
 3. **Generative de-biasing**: Fine-tune an LLM to generate a de-biased version of an article. 
+
 ---
 
 ## References
