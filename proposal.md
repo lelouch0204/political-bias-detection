@@ -5,7 +5,7 @@ permalink: /proposal/
 ---
 <div class="hero-section">
 	<h1>CS 7641 Group Project Proposal</h1>
-	<blockquote>Political bias detection in text</blockquote>
+	<blockquote>Political bias detection in news articles</blockquote>
 </div>
 
 ## Introduction and Background
@@ -49,7 +49,7 @@ Accurate political bias detection has applications in media literacy, fact-check
 #### Supervised
 
 1. **Baseline**: Shallow Deep Neural Architecture: Shallow NN/LSTM with TF-IDF inputs. A softmax layer outputs probabilities for Left, Center, or Right. 
-2. **Realistic**: Fine-tuned RoBERTa, DoBERTa model trained on labeled political articles to directly predict orientation. Paper by Jiang mentions motivations for political ideology detection in text sources using BERT [5]
+2. **Realistic**: Fine-tuned RoBERTa, DoBERTa model trained on labeled political articles to directly predict orientation. Paper by Jiang mentions motivations for political ideology detection in news articles using BERT [5]
 
 #### Unsupervised
 1. **Baseline**: K-Means (K=3), GMM, Hierarchical Clustering, DBScan, Spectral Clustering  

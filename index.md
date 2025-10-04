@@ -9,7 +9,7 @@ title: CS 7641 Group 29 ML Project
 
 <blockquote>
 <p><strong>Welcome to our CS 7641 group project repository!</strong><br>
-We are working on detecting political bias in pieces of text</p>
+We are working on detecting political bias in news articles</p>
 </blockquote>
 
 </div>
@@ -20,7 +20,7 @@ We are working on detecting political bias in pieces of text</p>
 
 <div class="info-box">
 
-This repository contains our comprehensive machine learning project for **CS 7641 - Machine Learning**. We are developing and implementing state-of-the-art ML algorithms to detect political bias in piece of text.
+This repository contains our comprehensive machine learning project for <b>CS 7641 - Machine Learning</b>. We are developing and implementing state-of-the-art ML algorithms to detect political bias in news articles.
 
 </div>
 
@@ -33,6 +33,8 @@ This repository contains our comprehensive machine learning project for **CS 764
 ---
 
 ## 📋 Project Components
+
+Find the detailed contribution table and Gantt chart <strong><a href="https://gtvault-my.sharepoint.com/:x:/g/personal/bchopra9_gatech_edu/EaKBNQYLXZZAlYqlaG47HMQBpyQenhIKer8PG6aVjd3WZg?e=vdgryX&nav=MTVfe0I0MjQyQUY5LUQxMDktNENGMi04NTVELUJFMzE5RDMzREQ4Rn0" target="_blank">here</a></strong>
 
 <table class="project-table">
 <thead>
@@ -78,7 +80,7 @@ This repository contains our comprehensive machine learning project for **CS 764
 
 | Name | Contact |
 |------|---------|
-| Bhumika Chopra | bchopra@gatech.edu |
+| Bhumika Chopra | bchopra9@gatech.edu |
 | Carla Du Plessis | cplessis6@gatech.edu |
 | Chaithanya Shyam Delanthabettu | csd3@gatech.edu |
 | Nandan Bharatkumar Parikh | nparikh44@gatech.edu |
@@ -128,19 +130,6 @@ This repository contains our comprehensive machine learning project for **CS 764
 
 1. **Review the [Project Proposal](proposal/)** to understand our methodology
 2. **Check out our <a href="https://github.gatech.edu/nparikh44/cs-7641-group-29" target="_blank">GitHub Repository</a>** for source code
-3. **Contact us** if you have questions or feedback
-
----
-
-<div class="contact-section">
-    <h2>📞 Contact</h2>
-    <p>For questions about this website, please contact:</p>
-    <p>
-        <strong>Email</strong>: <a href="mailto:nparikh44@gatech.edu">nparikh44@gatech.edu</a> <br>
-        <strong>Course</strong>: CS 7641 - Machine Learning <br>
-        <strong>Institution</strong>: Georgia Institute of Technology
-    </p>
-</div>
 
 ---
 
