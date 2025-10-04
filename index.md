@@ -9,7 +9,7 @@ title: CS 7641 Group 29 ML Project
 
 <blockquote>
 <p><strong>Welcome to our CS 7641 group project repository!</strong><br>
-Exploring cutting-edge machine learning techniques for real-world applications.</p>
+We are working on detecting political bias in pieces of text</p>
 </blockquote>
 
 </div>
@@ -20,7 +20,7 @@ Exploring cutting-edge machine learning techniques for real-world applications.<
 
 <div class="info-box">
 
-This repository contains our comprehensive machine learning project for **CS 7641 - Machine Learning**. We are developing and implementing state-of-the-art ML algorithms to solve [brief description of your project topic].
+This repository contains our comprehensive machine learning project for **CS 7641 - Machine Learning**. We are developing and implementing state-of-the-art ML algorithms to detect political bias in piece of text.
 
 </div>
 
@@ -75,7 +75,6 @@ This repository contains our comprehensive machine learning project for **CS 764
 
 ## 👥 Team Members
 
-*[Add your team member names and contact information]*
 
 | Name | Contact |
 |------|---------|
@@ -109,7 +108,7 @@ This repository contains our comprehensive machine learning project for **CS 764
 <div class="nav-card">
 
 <h3>💻 Repository</h3>
-<p><strong><a href="https://github.com/your-username/cs-7641-group-29">GitHub Repository</a></strong></p>
+<p><strong><a href="https://github.gatech.edu/nparikh44/cs-7641-group-29" target="_blank">GitHub Repository</a></strong></p>
 
 <p>Source code and additional materials:</p>
 <ul>
@@ -128,23 +127,21 @@ This repository contains our comprehensive machine learning project for **CS 764
 ## 🚀 Getting Started
 
 1. **Review the [Project Proposal](proposal/)** to understand our methodology
-2. **Check out our [GitHub Repository](https://github.com/your-username/cs-7641-group-29)** for source code
+2. **Check out our <a href="https://github.gatech.edu/nparikh44/cs-7641-group-29" target="_blank">GitHub Repository</a>** for source code
 3. **Contact us** if you have questions or feedback
 
 ---
 
 <div class="contact-section">
-
-## 📞 Contact
-
-For questions about this project, please contact:
-
-**Email**: [nparikh44@gatech.edu](mailto:nparikh44@gatech.edu)  
-**Course**: CS 7641 - Machine Learning  
-**Institution**: Georgia Institute of Technology
-
+    <h2>📞 Contact</h2>
+    <p>For questions about this website, please contact:</p>
+    <p>
+        <strong>Email</strong>: <a href="mailto:nparikh44@gatech.edu">nparikh44@gatech.edu</a> <br>
+        <strong>Course</strong>: CS 7641 - Machine Learning <br>
+        <strong>Institution</strong>: Georgia Institute of Technology
+    </p>
 </div>
 
 ---
 
-*Last updated: [Current Date]*
+*Last updated: 10/03/2025*

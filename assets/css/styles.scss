@@ -164,6 +164,26 @@ table:not(.project-table) td:last-child {
   width: 40% !important;
 }
 
+/* 1. Align Title and Nav side-by-side */
+.site-header .wrapper {
+  display: flex;
+  justify-content: space-between; /* Puts title on left, nav on right */
+  align-items: center; /* Vertically centers both elements */
+}
+
+/* 2. Align Menu Links horizontally */
+.site-nav .trigger {
+  display: flex;
+  gap: 20px; /* Adds space between links */
+}
+
+/* 3. Style the links */
+.site-nav .page-link {
+  text-decoration: none; /* Remove underline */
+  padding: 5px 0;
+  /* Inherit font and color from your theme */
+}
+
 /* Navigation cards */
 .nav-cards {
   display: grid !important;

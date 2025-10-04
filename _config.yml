@@ -35,3 +35,4 @@ plugins:
 # Exclude from processing
 exclude:
   - README.md
+  - theme-options.md
