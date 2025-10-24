@@ -1,0 +1,421 @@
+---
+---
+
+@import "jekyll-theme-cayman";
+
+/* Custom colorful styling for CS 7641 Group Project */
+
+:root {
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #f093fb;
+  --success-color: #4ecdc4;
+  --warning-color: #ffe066;
+  --danger-color: #ff6b6b;
+  --dark-color: #2c3e50;
+  --light-color: #ecf0f1;
+}
+
+/* Header styling */
+.site-header {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+  border-bottom: none !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+}
+
+.site-title, .site-title:visited {
+  color: white !important;
+  font-weight: bold !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.site-nav .page-link {
+  color: white !important;
+  font-weight: 500 !important;
+  transition: all 0.3s ease !important;
+}
+
+.site-nav .page-link:hover {
+  color: var(--accent-color) !important;
+  transform: translateY(-2px) !important;
+}
+
+/* Main content styling */
+.page-content {
+  padding: 2rem 0 !important;
+}
+
+.wrapper {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 1rem !important;
+}
+
+/* Hero section */
+.hero-section {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+  color: white !important;
+  padding: 3rem 2rem !important;
+  border-radius: 15px !important;
+  text-align: center !important;
+  margin: 2rem 0 !important;
+  box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3) !important;
+}
+
+.hero-section h1 {
+  color: white !important;
+  font-size: 2.5rem !important;
+  margin-bottom: 1rem !important;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.hero-section blockquote {
+  color: white !important;
+  font-size: 1.2rem !important;
+  margin: 0 !important;
+  opacity: 0.9 !important;
+}
+
+/* Info boxes */
+.info-box {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%) !important;
+  border-left: 5px solid var(--primary-color) !important;
+  padding: 1.5rem !important;
+  margin: 1.5rem 0 !important;
+  border-radius: 8px !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  transition: transform 0.3s ease !important;
+}
+
+.info-box:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Project components table */
+.project-table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 2rem 0 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+.project-table th {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+  color: white !important;
+  padding: 1rem !important;
+  text-align: left !important;
+  font-weight: bold !important;
+}
+
+.project-table td {
+  padding: 1rem !important;
+  border-bottom: 1px solid #e9ecef !important;
+  transition: background-color 0.3s ease !important;
+}
+
+.project-table tr:hover td {
+  background-color: #f8f9fa !important;
+}
+
+/* Team members table - responsive and better formatting */
+table:not(.project-table) {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 1.5rem 0 !important;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+  table-layout: fixed !important;
+}
+
+table:not(.project-table) th {
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+  color: white !important;
+  padding: 1rem !important;
+  text-align: left !important;
+  font-weight: bold !important;
+  word-wrap: break-word !important;
+}
+
+table:not(.project-table) td {
+  padding: 1rem !important;
+  border-bottom: 1px solid #e9ecef !important;
+  transition: background-color 0.3s ease !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word !important;
+  hyphens: auto !important;
+}
+
+table:not(.project-table) tr:hover td {
+  background-color: #f8f9fa !important;
+}
+
+/* Specific styling for team table */
+table:not(.project-table) th:first-child,
+table:not(.project-table) td:first-child {
+  width: 60% !important;
+}
+
+table:not(.project-table) th:last-child,
+table:not(.project-table) td:last-child {
+  width: 40% !important;
+}
+
+/* 1. Align Title and Nav side-by-side */
+.site-header .wrapper {
+  display: flex;
+  justify-content: space-between; /* Puts title on left, nav on right */
+  align-items: center; /* Vertically centers both elements */
+}
+
+/* 2. Align Menu Links horizontally */
+.site-nav .trigger {
+  display: flex;
+  gap: 20px; /* Adds space between links */
+}
+
+/* 3. Style the links */
+.site-nav .page-link {
+  text-decoration: none; /* Remove underline */
+  padding: 5px 0;
+  /* Inherit font and color from your theme */
+}
+
+/* Navigation cards */
+.nav-cards {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
+  gap: 2rem !important;
+  margin: 2rem 0 !important;
+}
+
+.nav-card {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%) !important;
+  border: 3px solid var(--primary-color) !important;
+  border-radius: 20px !important;
+  padding: 2.5rem !important;
+  text-align: center !important;
+  transition: all 0.4s ease !important;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.15) !important;
+  position: relative !important;
+  overflow: hidden !important;
+}
+
+.nav-card::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  height: 4px !important;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+}
+
+.nav-card:hover {
+  transform: translateY(-8px) !important;
+  border-color: var(--secondary-color) !important;
+  box-shadow: 0 15px 35px rgba(102, 126, 234, 0.25) !important;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%) !important;
+}
+
+.nav-card h3 {
+  color: var(--primary-color) !important;
+  margin-bottom: 1.5rem !important;
+  font-size: 1.4rem !important;
+  font-weight: 700 !important;
+}
+
+.nav-card p {
+  margin-bottom: 1rem !important;
+  color: #555 !important;
+}
+
+.nav-card ul {
+  text-align: center !important;
+  margin: 1rem 0 !important;
+  padding-left: 0 !important;
+  list-style-position: inside !important;
+}
+
+.nav-card li {
+  margin-bottom: 0.5rem !important;
+  color: #666 !important;
+}
+
+.nav-card a {
+  color: var(--primary-color) !important;
+  text-decoration: none !important;
+  font-weight: bold !important;
+  font-size: 1.2rem !important;
+  transition: color 0.3s ease !important;
+}
+
+.nav-card a:hover {
+  color: var(--secondary-color) !important;
+  text-decoration: underline !important;
+}
+
+/* Status indicators */
+.status-success {
+  color: var(--success-color) !important;
+}
+
+.status-warning {
+  color: var(--warning-color) !important;
+}
+
+.status-pending {
+  color: var(--danger-color) !important;
+}
+
+/* Contact section */
+.contact-section {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%) !important;
+  color: white !important;
+  padding: 2rem !important;
+  border-radius: 15px !important;
+  margin: 2rem 0 !important;
+  text-align: center !important;
+}
+
+.contact-section h2 {
+  color: white !important;
+  margin-bottom: 1rem !important;
+}
+
+.contact-section a {
+  color: var(--accent-color) !important;
+  text-decoration: none !important;
+  font-weight: bold !important;
+}
+
+.contact-section a:hover {
+  color: white !important;
+  text-decoration: underline !important;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .nav-cards {
+    grid-template-columns: 1fr !important;
+  }
+  
+  .hero-section h1 {
+    font-size: 2rem !important;
+  }
+  
+  .project-table {
+    font-size: 0.9rem !important;
+  }
+  
+  .project-table th,
+  .project-table td {
+    padding: 0.8rem 0.5rem !important;
+  }
+  
+  /* Team table responsive design */
+  table:not(.project-table) {
+    font-size: 0.9rem !important;
+  }
+  
+  table:not(.project-table) th,
+  table:not(.project-table) td {
+    padding: 0.8rem 0.5rem !important;
+  }
+  
+  table:not(.project-table) th:first-child,
+  table:not(.project-table) td:first-child {
+    width: 50% !important;
+  }
+  
+  table:not(.project-table) th:last-child,
+  table:not(.project-table) td:last-child {
+    width: 50% !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Stack team table on very small screens - only apply to tables without project-table class */
+  table:not(.project-table), 
+  table:not(.project-table) thead, 
+  table:not(.project-table) tbody, 
+  table:not(.project-table) th, 
+  table:not(.project-table) td, 
+  table:not(.project-table) tr {
+    display: block !important;
+  }
+  
+  table:not(.project-table) thead tr {
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+  }
+  
+  table:not(.project-table) tr {
+    border: 1px solid #ccc !important;
+    margin-bottom: 1rem !important;
+    padding: 1rem !important;
+    border-radius: 8px !important;
+    background: white !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+  }
+  
+  table:not(.project-table) td {
+    border: none !important;
+    border-bottom: 1px solid #eee !important;
+    position: relative !important;
+    padding-left: 50% !important;
+    padding-top: 0.5rem !important;
+    padding-bottom: 0.5rem !important;
+  }
+  
+  table:not(.project-table) td:before {
+    content: attr(data-label) ": " !important;
+    position: absolute !important;
+    left: 6px !important;
+    width: 45% !important;
+    padding-right: 10px !important;
+    white-space: nowrap !important;
+    font-weight: bold !important;
+    color: var(--primary-color) !important;
+  }
+}
+
+/* Custom button styling */
+.btn {
+  display: inline-block !important;
+  padding: 12px 24px !important;
+  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+  color: white !important;
+  text-decoration: none !important;
+  border-radius: 25px !important;
+  font-weight: bold !important;
+  transition: all 0.3s ease !important;
+  border: none !important;
+  cursor: pointer !important;
+}
+
+.btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 15px rgba(102, 126, 234, 0.3) !important;
+  color: white !important;
+}
+
+/* Footer styling */
+.site-footer {
+  background: var(--dark-color) !important;
+  color: white !important;
+  padding: 2rem 0 !important;
+  margin-top: 3rem !important;
+}
+
+.site-footer a {
+  color: var(--accent-color) !important;
+}
+
+.site-footer a:hover {
+  color: white !important;
+}
