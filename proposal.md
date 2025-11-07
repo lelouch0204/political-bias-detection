@@ -186,9 +186,9 @@ Spectral Clustering results: visualized in 2D, and the n_neighbors hyperparamete
 Figure 7. Spectral Clustering 
 
 ### Analysis of our Implemented Alogirthms/Model
-We analyzed all our visualized clustering algorithms by conducting an evaluation of the metrics and normalizing the scores. 
-	- A dictionary of clustering evaluation metrics was defined, including both intrinsic (Silhouette, Calinski-Harabasz, Davies-Bouldin) and extrinsic (Adjusted Rand Index, NMI, Homogeneity, Completeness, V-Measure) metrics. 
-	- These metrics were computed for the labels obtained from fitting the various clustering algorithms.  
+We analyzed all our visualized clustering algorithms by conducting an evaluation of the metrics and normalizing the scores.
+- A dictionary of clustering evaluation metrics was defined, including both intrinsic (Silhouette, Calinski-Harabasz, Davies-Bouldin) and extrinsic (Adjusted Rand Index, NMI, Homogeneity, Completeness, V-Measure) metrics.
+- These metrics were computed for the labels obtained from fitting the various clustering algorithms.  
 
 #### Results
 
