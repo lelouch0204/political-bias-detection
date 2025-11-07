@@ -243,7 +243,8 @@ Our project introduces several novel components beyond standard bias classificat
 ## Gantt Chart
 *chart here*
 ## Contributions 
-*table here* 
+
+![Figure 12](/assets/images/image.png)
 
 ## References
 
