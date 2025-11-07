@@ -75,7 +75,8 @@ Result: Created a DataFrame with 8112 rows and 5 columns.
 Process: We visualized the distribution of text lengths using histograms, and generated count plots using seaborn to show the frequency of different bias categories and sources. The distribution of the political bias labels was visualized using a bar plot. We also did some rudimentary binning to show the count of each type of bias category for each source.  
 Result: The data displayed a high count of very short text entries (Figure 1) and the distribution across bias categories and sources. The political bias labels bar plot showed an imbalance in the dataset with a higher number of "highly conservative" articles. (Figure 2) We visualized the spread of article sources in Figure 3. From our bin counting of each type of content for each source, we also observed that each source only produces one type of political bias content. (Figure 4)
 
-![Figure 1](/assets/images/image.png){: .small-img } Figure 1
+![Figure 1](/assets/images/image.png){: .small-img }
+<p class="caption"><strong>Figure 1:</strong> Distribution of text lengths</p>
 ![Figure 2](/assets/images/image2.png){: .small-img } Figure 2
 ![Figure 3](/assets/images/image3.png){: .small-img } Figure 3
 ![Figure 4](/assets/images/image4.png){: .small-img } Figure 4
@@ -174,7 +175,7 @@ Our goal is to predict biases towards political ideologies by using text classif
 4. **Clustering Metrics**: Silhouette Score, Normalized Mutual Information (NMI), Adjusted Rand Index (ARI), Class Balance Checks, Expected Calibration Error (ECE) 
 
 ### Clustering Visualizations 
-K-Means and Mini-Batch K-Means clustering results: Visualized in 2D using the 2-component PCA reduced data, showing the cluster assignments and centroids. (Figure 1). The resulting clustering from K-Means shows overlapping clusters that are quite dense, indicating that there is some overlap between different political bias labels. In the future, we plan to _____ to reduce the density of the clustering and create more distinct clusters. 
+K-Means and Mini-Batch K-Means clustering results: Visualized in 2D using the 2-component PCA reduced data, showing the cluster assignments and centroids. (Figure 1). The resulting clustering from K-Means shows overlapping clusters that are quite dense, indicating that there is some overlap between different political bias labels. In the future, we plan to reduce the density of the clustering and create more distinct clusters. 
 ![Figure 5](/assets/images/image5.png){: .small-img } Figure 5. K-Means Clustering
 
 Gaussian Mixture Model (GMM) results: Visualized in 2D, including the cluster means and covariance ellipses. 

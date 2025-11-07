@@ -427,3 +427,11 @@ table:not(.project-table) td:last-child {
   display: block;
   margin: 0.5rem auto; 
 }
+
+.caption {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+  margin-top: 0.25rem;
+  margin-bottom: 1rem;
+}
