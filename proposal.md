@@ -75,17 +75,11 @@ Result: Created a DataFrame with 8112 rows and 5 columns.
 Process: We visualized the distribution of text lengths using histograms, and generated count plots using seaborn to show the frequency of different bias categories and sources. The distribution of the political bias labels was visualized using a bar plot. We also did some rudimentary binning to show the count of each type of bias category for each source.  
 Result: The data displayed a high count of very short text entries (Figure 1) and the distribution across bias categories and sources. The political bias labels bar plot showed an imbalance in the dataset with a higher number of "highly conservative" articles. (Figure 2) We visualized the spread of article sources in Figure 3. From our bin counting of each type of content for each source, we also observed that each source only produces one type of political bias content. (Figure 4)
 
-![Figure 1](/assets/images/image.png){: .small-img }
-![Figure 2](/assets/images/image2.png){: .small-img }
-![Figure 3](/assets/images/image3.png){: .small-img }
-![Figure 4](/assets/images/image4.png){: .small-img }
+![Figure 1](/assets/images/image.png){: .small-img } Figure 1
+![Figure 2](/assets/images/image2.png){: .small-img } Figure 2
+![Figure 3](/assets/images/image3.png){: .small-img } Figure 3
+![Figure 4](/assets/images/image4.png){: .small-img } Figure 4
 
-<div class="figure-row">
-  <img src="/assets/images/image.png" alt="Figure 1">
-  <img src="/assets/images/image2.png" alt="Figure 2">
-  <img src="/assets/images/image3.png" alt="Figure 3">
-  <img src="/assets/images/image4.png" alt="Figure 4">
-</div>
 
 #### 3. Filtering Out Bad Data: 
 To improve the quality of the dataset, we removed entries that are unlikely to be informative for text analysis, such as those with minimal text content.  
@@ -110,8 +104,6 @@ Result: This process reduced vocabulary size and grouped different word forms un
 This is a statistical measure used to represent text as numerical features, reflecting how important a word is within a document relative to the entire corpus. It combines two components: Term Frequency (TF) measuring how often a word appears in a document, and Inverse Document Frequency (IDF) which downweights words that appear frequently across many documents, reducing the influence of common terms like “the” or “is”. 
 The resulting TF-IDF value is high for words that occur often in a document but rarely elsewhere, making them good indicators of the document’s content. 
 Process: TfidfVectorizer with a vocabulary limit of 5000 features was used to transform the lemmatized text into numeric vectors. This representation was then used for modeling and to extract the top-weighted words as keywords for each text sample.
-Result:
-*Insert Table screenshot
 
 #### 8. Text Embedding: 
 Process: The 'all-MiniLM-L6-v2' Sentence Transformer model was used to generate embeddings for the text data 
@@ -183,22 +175,22 @@ Our goal is to predict biases towards political ideologies by using text classif
 
 ### Clustering Visualizations 
 K-Means and Mini-Batch K-Means clustering results: Visualized in 2D using the 2-component PCA reduced data, showing the cluster assignments and centroids. (Figure 1). The resulting clustering from K-Means shows overlapping clusters that are quite dense, indicating that there is some overlap between different political bias labels. In the future, we plan to _____ to reduce the density of the clustering and create more distinct clusters. 
-*Figure 1. K-Means Clustering*
+![Figure 5](/assets/images/image5.png){: .small-img } Figure 5. K-Means Clustering
 
 Gaussian Mixture Model (GMM) results: Visualized in 2D, including the cluster means and covariance ellipses. 
-*Figure 2. GMM*
+![Figure 6](/assets/images/image6.png){: .small-img } Figure 6. GMM Clustering
 
 Hierarchical Clustering (Agglomerative and Birch) results: visualized in 2D.  (Figure 3) A dendrogram for hierarchical clustering was generated to show the merging of clusters. (Figure 4) 
-*Figure 3 & 4*
+![Figure 7](/assets/images/image7.png){: .small-img } Figure 7. Agglomerative Clustering 
+![Figure 8](/assets/images/image8.png){: .small-img } Figure 8. Dendogram
 
 DBSCAN clustering results: visualized in 2D, and a 3D attempt was made.  First, when we visualized all the points, we noticed that a majority of the points were identified as noise. (Figure 5) We then removed the noise points to just viusalize the DBSCAN clustering. (Figure 6) 
+![Figure 9](/assets/images/image9.png){: .small-img } Figure 9. DBSCAN without noise 
+![Figure 10](/assets/images/imagea.png){: .small-img } Figure 10. DBSCAN with noise 
 
-Figure 5. DBSCAN with noise 
-
-Figure 6. DBSCAN without noise 
 
 Spectral Clustering results: visualized in 2D, and the n_neighbors hyperparameter was adjusted. (Figure 7) 
-Figure 7. Spectral Clustering 
+![Figure 11](/assets/images/imageb.png){: .small-img } Figure 11. Spectral Clustering 
 
 ### Analysis of our Implemented Alogirthms/Model
 We analyzed all our visualized clustering algorithms by conducting an evaluation of the metrics and normalizing the scores.
@@ -207,7 +199,8 @@ We analyzed all our visualized clustering algorithms by conducting an evaluation
 
 #### Results
 
-*Figures 8 & 9*
+![Figure 12](/assets/images/imagec.png){: .small-img } Figure 12. Clustering Evaluation Metrics
+![Figure 13](/assets/images/imaged.png){: .small-img } Figure 13. Clustering Evaluation HeatMap
 
 ---
 

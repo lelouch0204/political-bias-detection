@@ -427,14 +427,3 @@ table:not(.project-table) td:last-child {
   display: block;
   margin: 0.5rem auto; 
 }
-
-.figure-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1rem;
-}
-.figure-row img {
-  max-width: 250px;
-  height: auto;
-}
