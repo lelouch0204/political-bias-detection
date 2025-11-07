@@ -179,29 +179,29 @@ Our goal is to predict biases towards political ideologies by using text classif
 
 ### Clustering Visualizations 
 K-Means and Mini-Batch K-Means clustering results: Visualized in 2D using the 2-component PCA reduced data, showing the cluster assignments and centroids. (Figure 1). The resulting clustering from K-Means shows overlapping clusters that are quite dense, indicating that there is some overlap between different political bias labels. In the future, we plan to reduce the density of the clustering and create more distinct clusters. 
-![Figure 5](/assets/images/image5.png){: .small-img } Figure 5. K-Means Clustering
+![Figure 5](/assets/images/image5.png){: .small-img } 
 <p class="caption"><strong>Figure 5:</strong> K-Means Clustering</p>
 
 
 Gaussian Mixture Model (GMM) results: Visualized in 2D, including the cluster means and covariance ellipses. 
-![Figure 6](/assets/images/image6.png){: .small-img } Figure 6. GMM Clustering
+![Figure 6](/assets/images/image6.png){: .small-img } 
 <p class="caption"><strong>Figure 6:</strong> GMM Clustering</p>
 
 Hierarchical Clustering (Agglomerative and Birch) results: visualized in 2D.  (Figure 3) A dendrogram for hierarchical clustering was generated to show the merging of clusters. (Figure 4) 
-![Figure 7](/assets/images/image7.png){: .small-img } Figure 7. Agglomerative Clustering 
+![Figure 7](/assets/images/image7.png){: .small-img } 
 <p class="caption"><strong>Figure 7:</strong> Agglomerative Clustering</p>
-![Figure 8](/assets/images/image8.png){: .small-img } Figure 8. Dendogram
+![Figure 8](/assets/images/image8.png){: .small-img } 
 <p class="caption"><strong>Figure 8:</strong> Dendogram</p>
 
 DBSCAN clustering results: visualized in 2D, and a 3D attempt was made.  First, when we visualized all the points, we noticed that a majority of the points were identified as noise. (Figure 5) We then removed the noise points to just viusalize the DBSCAN clustering. (Figure 6) 
 ![Figure 9](/assets/images/image9.png){: .small-img } Figure 9. DBSCAN without noise 
 <p class="caption"><strong>Figure 9:</strong> DBSCAN without noise</p>
-![Figure 10](/assets/images/imagea.png){: .small-img } Figure 10. DBSCAN with noise 
+![Figure 10](/assets/images/imagea.png){: .small-img } 
 <p class="caption"><strong>Figure 10:</strong> DBSCAN with noise</p>
 
 
 Spectral Clustering results: visualized in 2D, and the n_neighbors hyperparameter was adjusted. (Figure 7) 
-![Figure 11](/assets/images/imageb.png){: .small-img } Figure 11. Spectral Clustering 
+![Figure 11](/assets/images/imageb.png){: .small-img } 
 <p class="caption"><strong>Figure 11:</strong> Spectral Clustering</p>
 
 ### Analysis of our Implemented Alogirthms/Model
@@ -211,9 +211,9 @@ We analyzed all our visualized clustering algorithms by conducting an evaluation
 
 #### Results
 
-![Figure 12](/assets/images/imagec.png){: .small-img } Figure 12. Clustering Evaluation Metrics
+![Figure 12](/assets/images/imagec.png){: .small-img } 
 <p class="caption"><strong>Figure 12:</strong> Clustering Evaluation Metrics</p>
-![Figure 13](/assets/images/imaged.png){: .small-img } Figure 13. Clustering Evaluation HeatMap
+![Figure 13](/assets/images/imaged.png){: .small-img } 
 <p class="caption"><strong>Figure 13:</strong> Clustering Evaluation Heatmap</p>
 
 ---
