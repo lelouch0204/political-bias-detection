@@ -46,6 +46,7 @@ Accurate political bias detection has applications in media literacy, fact-check
 
 ### Machine Learning Algorithms/Models Proposed
 
+
 #### Supervised
 
 1. **Baseline**: Shallow Deep Neural Architecture: Shallow NN/LSTM with TF-IDF inputs. A softmax layer outputs probabilities for Left, Center, or Right. 
@@ -65,6 +66,7 @@ we then filtered the articles to exclude rows with irrelevant text that would no
 ---
 
 ## Discussion
+---
 
 ### Quantitative Metrics
 
