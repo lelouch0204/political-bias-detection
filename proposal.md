@@ -46,7 +46,6 @@ Accurate political bias detection has applications in media literacy, fact-check
 
 ### Machine Learning Algorithms/Models Proposed
 
-
 #### Supervised
 
 1. **Baseline**: Shallow Deep Neural Architecture: Shallow NN/LSTM with TF-IDF inputs. A softmax layer outputs probabilities for Left, Center, or Right. 
@@ -57,40 +56,145 @@ Accurate political bias detection has applications in media literacy, fact-check
 2. **SimCSE (Ambitious)**: Use contrastive learning for sentence embeddings to robust text representations, clustering semantically similar sentences and capturing fine-grained political bias cues with a triplet loss function 
 
 ## Midterm Implementations 
-***Why we chose them and what we implemented*
 ### Data Processesing Method Implemented
-Our data was pulled from a political bias dataset accessed through Kaggle. We first inspected the contents counting the number of article titles and links. Of the total 8112 titles and 8100 links, we found 6021 and 5461 being unique, repectively. The articles in this dataset were split by atributes of text, source, and bias. 
-We then filtered the articles to exclude rows with irrelevant text that would not be useful in our model training, and ordering our texts by length. 
-### Machine Learning Algorithms/Models Implemented
+Our motivation was to gain insights into the data structure, quality, and potential biases before performing more complex analysis. Complex analysis included cleaning the data by filtering out bad data and short texts to clarify our bias distributions. We used methods of Text Embedding and TF-IDF in our data preprocessing. Understanding these distributions helped us to make decisions about further data cleaning and modeling. Our general preprocessing pipeline looked as follows:  
+
+1. Loading the Dataset 
+Process: We downloaded the AllSides dataset from a kagglehub library and then used pandas.read_csv to load the data into a DataFrame. This allowed us to process the data within a Google Colab environment using Python libraries like pandas. The relevant columns "Text" and "Bias" were selected. The categorical "Bias" labels were mapped to numerical integers (0-4) for easier processing, with 0 = “highly conservative”, 1 = “moderately conservative”, 2 = “centrist / balanced”, 3 = “moderately liberal”, and 4 = “highly liberal”. 
+Result: Created a DataFrame with 8112 rows and 5 columns.
+
+2. Initial Visualization and Analysis of Distribution 
+Process: We visualized the distribution of text lengths using histograms, and generated count plots using seaborn to show the frequency of different bias categories and sources. The distribution of the political bias labels was visualized using a bar plot. We also did some rudimentary binning to show the count of each type of bias category for each source.  
+Result: The data displayed a high count of very short text entries (Figure 1) and the distribution across bias categories and sources. The political bias labels bar plot showed an imbalance in the dataset with a higher number of "highly conservative" articles. (Figure 2) We visualized the spread of article sources in Figure 3. From our bin counting of each type of content for each source, we also observed that each source only produces one type of political bias content. (Figure 4)
+*Sonika Insert Figures 1-4*
+
+3. Filtering Out Bad Data 
+To improve the quality of the dataset, we removed entries that are unlikely to be informative for text analysis, such as those with minimal text content.  
+Process: Created a new column text_length to store the length of the 'Text' column and then filtered the DataFrame to keep only rows where text_length was 50 or greater. 
+Result: This reduced the dataset to 6209 rows, focusing on more substantial articles.
+
+4. Cleaning the Data 
+To prepare the text data for natural language processing tasks by reducing noise, standardizing terms, and extracting meaningful components. This improves the effectiveness of techniques like TF-IDF vectorization and clustering. 
+Process: The ftfy library was used to fix text encoding issues. spaCy was employed to perform tokenization and lemmatization, converting words to their base forms and removing stop words. 
+Result: Standardized the text and extracted keywords for further analysis. 
+
+ 5. Normalization 
+Textual data often consists of a lot of words that mean the same thing but are spelled differently, that is why we need to normalize the text. This is a way of reducing noise and improving the reliability of text analysis. 
+Process: Lowercase conversion, punctuation removal, contraction expansion, standardized spelling using SpaCY.  
+
+6. Lemmatization 
+Lemmatization is the process of reducing words to their base or dictionary form (lemma) while considering their context and part of speech. For example, “running”, “runs”, and “ran” are all reduced to “run”. Unlike stemming, which simply chops off word endings, lemmatization uses linguistic knowledge from a combination of dictionary lookups for irregular words (e.g., mice → mouse, was → be) and morphological rules based on each word’s part of speech to ensure the resulting word is valid and meaningful.  
+Process: We did this using SpaCy’s rule-based lemmatizer from the en_core_web_sm model. 
+Result: This process reduced vocabulary size and grouped different word forms under a single representative lemma, improving the quality of the TF-IDF representation used for modeling. 
+
+7. TF-IDF 
+This is a statistical measure used to represent text as numerical features, reflecting how important a word is within a document relative to the entire corpus. It combines two components: Term Frequency (TF) measuring how often a word appears in a document, and Inverse Document Frequency (IDF) which downweights words that appear frequently across many documents, reducing the influence of common terms like “the” or “is”. 
+The resulting TF-IDF value is high for words that occur often in a document but rarely elsewhere, making them good indicators of the document’s content. 
+Process: TfidfVectorizer with a vocabulary limit of 5000 features was used to transform the lemmatized text into numeric vectors. This representation was then used for modeling and to extract the top-weighted words as keywords for each text sample.
+Result:
+*Insert Table screenshot
+
+8. Text Embedding: 
+Process: The 'all-MiniLM-L6-v2' Sentence Transformer model was used to generate embeddings for the text data 
+Result: Resulting in a feature matrix X with a shape of (6209, 384).
+
+---
+## Machine Learning Algorithms/Models Implemented
 We implemented our unsupervised learning method and set up the pipeline for our supervised learning method. 
+### Unsupervised 
+We tried several unsupervised clustering methods, including K-means clustering, GMM, density-based methods like DBSCAN, hierarchical clustering, and spectral clustering. After data loading and preprocessing to generate our text embeddings, the steps we took for the unsupervised learning methods as follows:  
+
+1. Dimensionality Reduction: Principal Component Analysis (PCA) was applied to reduce the dimensionality of the text embeddings from 384 to 50 components (X_pca). A 2-component PCA (X_vis) was also performed specifically for 2D visualizations. 
+
+2. Unsupervised Clustering Techniques: We visualized the categorization of our unique political bias labels by setting our number of clusters to 5. We then evaluated these clustering methods by outputting visualizations of each which will be discussed in the results.
+Several unsupervised clustering algorithms were initialized: 
+	- K-Means and Mini-Batch K-Means
+	- Gaussian Mixture Model (GMM) and Bayesian Gaussian Mixture Model
+	- Density-based methods: DBSCAN, HDBSCAN, OPTICS, and Mean Shift
+	- Hierarchical Clustering: Agglomerative Clustering and Birch
+	- Spectral Clustering
+the current status of the models is that they have been fitted and their results visualized in 2D (and one attempt in 3D), which will be discussed below. The performance metrics have been calculated and are available in the computed_metrics DataFrame. Observations have been made regarding the visualizations, and the potential impact of hyperparameters on DBSCAN and Spectral Clustering performance has been discussed. 
+
+### Supervised
+#### Learning Method 1
+We are currently working on using the pre-processed TF-IDF vectors to do supervised learning. Our model architecture is a Shallow Neural Network with TF-IDF. 
+Implementation: sklearn.neural_network.MLPClassifier with hidden layers (256, 128), Adam optimizer, early stopping 
+Architecture: 
+	- Input: 5000 dimensional TF-IDF vectors
+	- Hidden layers: [256, 128] with ReLU activation
+	- Output: Softmax over bias classes (Left, Center, Right, etc.)
+	- Regularization: Early stopping with validation monitoring 
+Why This Approach: This baseline establishes a performance floor using traditional NLP features. The shallow architecture with TF-IDF is computationally efficient and interpretable—we can directly examine which terms drive predictions. MLPClassifier's early stopping prevents overfitting on potentially noisy bias labels, and the moderate depth (2 hidden layers) balances expressiveness with generalization. This approach is expected to capture overt bias signals (explicit partisan vocabulary) but may struggle with subtle framing differences. 
+Expected Performance: Macro F1 ~0.65-0.75. TF-IDF excels at identifying explicit bias markers but lacks semantic understanding for nuanced framing. 
+
+#### Learning Method 2
+Our next step is to try an advanced method which is Fine-Tuned RoBERTa. RoBERTa's pre-training on massive corpora provides rich contextual representations crucial for bias detection.
+Key advantages include:  
+	- Bidirectional Context: Captures how words interact within entire sentences, detecting framing through word ordering and syntax.
+	- Transfer Learning: Pre-trained language understanding transfers to political domain with minimal fine-tuning
+	- Attention Mechanisms: Self-attention layers learn which words/phrases carry ideological signals
+	- Semantic Sensitivity: Distinguishes between "border security" vs "anti-immigrant policy"—same topic, different framing 
+The proposed architecture is:  
+	- Base: roberta-base (125M parameters) 
+	- Fine-tuning: All layers with task-specific classification head 
+	- Training: 3 epochs, batch size 8, AdamW optimizer, learning rate warmup 
+	- Max sequence length: 512 tokens 
+Expected Performance: We expect this to perform better, with a macro F1 ~0.80-0.88 of around. Transformer models have shown strong results on similar framing detection tasks. The attention mechanism should identify subtle narrative differences across outlets covering the same events. 
 
 ---
 
-## Results and Discussion
----
+## Results & Discussion
+
+### Project Goals
+Our goal is to predict biases towards political ideologies by using text classifications and explainability to highlight certain words and tones that are prevalent in writing that is either left or right-leaning. We also think we can train our model by grouping data from specific news sources into the categories of either left or right-leaning, then by deploying the model on external news data, we can devise a metric to quantify the added bias to the article. 
+
+### Expected Results
+- Supervised classification (left/center/right) evaluated using accuracy and macro-F1. 
+- Unsupervised ECFD clusters evaluated with silhouette scores, Adjusted Rand Index, and human evaluation for interpretability. 
+- Insightful narratives showing selective coverage and framing differences across outlets.
 
 ### Quantitative Metrics
-
 1. **Likelihood/Probability Metrics**: Cross-Entropy Loss, Log Loss, Brier Score 
 2. **Performance Metrics**: Macro Averaged F1, ROC-AUC 
 3. **Explainability Metrics**: Shapley Additive Explanations (SHAP) Values, Integrated Gradients, LIME, Attention Visualization 
 4. **Clustering Metrics**: Silhouette Score, Normalized Mutual Information (NMI), Adjusted Rand Index (ARI), Class Balance Checks, Expected Calibration Error (ECE) 
 
-### Project Goals
+### Clustering Visualizations 
+K-Means and Mini-Batch K-Means clustering results: Visualized in 2D using the 2-component PCA reduced data, showing the cluster assignments and centroids. (Figure 1). The resulting clustering from K-Means shows overlapping clusters that are quite dense, indicating that there is some overlap between different political bias labels. In the future, we plan to _____ to reduce the density of the clustering and create more distinct clusters. 
+*Figure 1. K-Means Clustering*
 
-Our goal is to predict biases towards political ideologies by using text classifications and explainability to highlight certain words and tones that are prevalent in writing that is either left or right-leaning. We also think we can train our model by grouping data from specific news sources into the categories of either left or right-leaning, then by deploying the model on external news data, we can devise a metric to quantify the added bias to the article. 
+Gaussian Mixture Model (GMM) results: Visualized in 2D, including the cluster means and covariance ellipses. 
+*Figure 2. GMM*
 
-### Expected Results
+Hierarchical Clustering (Agglomerative and Birch) results: visualized in 2D.  (Figure 3) A dendrogram for hierarchical clustering was generated to show the merging of clusters. (Figure 4) 
+*Figure 3 & 4*
 
-- Supervised classification (left/center/right) evaluated using accuracy and macro-F1. 
-- Unsupervised ECFD clusters evaluated with silhouette scores, Adjusted Rand Index, and human evaluation for interpretability. 
-- Insightful narratives showing selective coverage and framing differences across outlets. 
+DBSCAN clustering results: visualized in 2D, and a 3D attempt was made.  First, when we visualized all the points, we noticed that a majority of the points were identified as noise. (Figure 5) We then removed the noise points to just viusalize the DBSCAN clustering. (Figure 6) 
 
-## Midterm Results and Discussion
-*discussion of finding here*
+Figure 5. DBSCAN with noise 
 
-### Visualizations
-*Visualizations here
+Figure 6. DBSCAN without noise 
+
+Spectral Clustering results: visualized in 2D, and the n_neighbors hyperparameter was adjusted. (Figure 7) 
+Figure 7. Spectral Clustering 
+
+### Analysis of our Implemented Alogirthms/Model
+We analyzed all our visualized clustering algorithms by conducting an evaluation of the metrics and normalizing the scores. 
+	- A dictionary of clustering evaluation metrics was defined, including both intrinsic (Silhouette, Calinski-Harabasz, Davies-Bouldin) and extrinsic (Adjusted Rand Index, NMI, Homogeneity, Completeness, V-Measure) metrics. 
+	- These metrics were computed for the labels obtained from fitting the various clustering algorithms.  
+
+Results: 
+*Figures 8 & 9*
+
+---
+
+### Next Steps 
+	- Visualize the remaining density-based clustering results (HDBSCAN, OPTICS, Mean Shift) if desired. 
+	- Further explore hyperparameter tuning algorithms like DBSCAN and Spectral Clustering to potentially improve clustering results. 
+	- Analyze the computed_metrics DataFrame to quantitatively compare the performance of the different clustering algorithms based on chosen metrics. 
+	- Find ways to reduce the density of the clusters and fine tune the presentation of our clusters by removing noise points
+	- Based on the visualizations and metric evaluations, select the most promising unsupervised learning technique for this dataset. 
+	- Implement our supervised learning techniques which are hallow Neural Network with TF-IDF and fine-tuning RoBERTa 
 
 ---
 ## Novelty Ideas 
