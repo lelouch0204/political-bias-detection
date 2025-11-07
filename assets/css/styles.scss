@@ -419,3 +419,22 @@ table:not(.project-table) td:last-child {
 .site-footer a:hover {
   color: white !important;
 }
+
+.small-img {
+  max-width: 350px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0.5rem auto; 
+}
+
+.figure-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+.figure-row img {
+  max-width: 250px;
+  height: auto;
+}
