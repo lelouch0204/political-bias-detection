@@ -1,6 +1,6 @@
 ---
 layout: page
-title: ML Project Proposal
+title: ML Midterm Report
 permalink: /proposal/
 ---
 <div class="hero-section">
