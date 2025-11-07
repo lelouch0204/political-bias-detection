@@ -4,7 +4,7 @@ title: ML Midterm Report
 permalink: /proposal/
 ---
 <div class="hero-section">
-	<h1>CS 7641 Group 29 Project Proposal & Midterm Report</h1>
+	<h1>Proposal & Midterm Report</h1>
 	<blockquote>Political bias detection in news articles</blockquote>
 </div>
 

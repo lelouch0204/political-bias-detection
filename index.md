@@ -47,22 +47,22 @@ Find the detailed contribution table and Gantt chart <strong><a href="https://gt
 <tbody>
 <tr>
 <td>📊 <strong>Data Collection</strong></td>
-<td class="status-pending">⏳ Pending</td>
+<td class="status-success">✅ Completed</td>
 <td>Gathering and preparing dataset</td>
 </tr>
 <tr>
 <td>🔧 <strong>Preprocessing</strong></td>
-<td class="status-pending">⏳ Pending</td>
+<td class="status-success">✅ Completed</td>
 <td>Feature engineering and data cleaning</td>
 </tr>
 <tr>
 <td>🤖 <strong>Model Development</strong></td>
-<td class="status-pending">⏳ Pending</td>
+<td class="status-warning">🔄 In Progress</td>
 <td>Implementing ML algorithms</td>
 </tr>
 <tr>
 <td>📈 <strong>Evaluation</strong></td>
-<td class="status-pending">⏳ Pending</td>
+<td class="status-warning">🔄 In Progress</td>
 <td>Performance analysis and comparison</td>
 </tr>
 <tr>
@@ -94,10 +94,10 @@ Find the detailed contribution table and Gantt chart <strong><a href="https://gt
 
 <div class="nav-card">
 
-<h3>📖 Project Proposal</h3>
-<p><strong><a href="proposal/">View Full Proposal</a></strong></p>
+<h3>📖 Project Proposal & Report</h3>
+<p><strong><a href="proposal/">View Proposal and Report</a></strong></p>
 
-<p>Complete project proposal including:</p>
+<p>Complete project proposal and progress report including:</p>
 <ul>
 <li>Literature review and background</li>
 <li>Problem definition and motivation</li>
@@ -128,7 +128,7 @@ Find the detailed contribution table and Gantt chart <strong><a href="https://gt
 
 ## 🚀 Getting Started
 
-1. **Review the [Project Proposal](proposal/)** to understand our methodology
+1. **Review the [proposal and progress report](proposal/)** to understand our methodology
 2. **Check out our <a href="https://github.gatech.edu/nparikh44/cs-7641-group-29" target="_blank">GitHub Repository</a>** for source code
 
 ---
