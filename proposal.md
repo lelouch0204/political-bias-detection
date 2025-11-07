@@ -75,10 +75,10 @@ Result: Created a DataFrame with 8112 rows and 5 columns.
 Process: We visualized the distribution of text lengths using histograms, and generated count plots using seaborn to show the frequency of different bias categories and sources. The distribution of the political bias labels was visualized using a bar plot. We also did some rudimentary binning to show the count of each type of bias category for each source.  
 Result: The data displayed a high count of very short text entries (Figure 1) and the distribution across bias categories and sources. The political bias labels bar plot showed an imbalance in the dataset with a higher number of "highly conservative" articles. (Figure 2) We visualized the spread of article sources in Figure 3. From our bin counting of each type of content for each source, we also observed that each source only produces one type of political bias content. (Figure 4)
 
-![Figure 1]("./assets/images/image.png" "Figure 1")
-![Figure 2]("./assets/images/image2.png" "Figure 2")
-![Figure 3]("./assets/images/image3.png" "Figure 3")
-![Figure 4]("./assets/images/image4.png" "Figure 4")
+![Figure 1](./assets/images/image.png)
+![Figure 2](./assets/images/image2.png)
+![Figure 3](./assets/images/image3.png)
+![Figure 4](./assets/images/image4.png)
 
 #### 3. Filtering Out Bad Data: 
 To improve the quality of the dataset, we removed entries that are unlikely to be informative for text analysis, such as those with minimal text content.  
