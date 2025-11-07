@@ -59,6 +59,10 @@ Accurate political bias detection has applications in media literacy, fact-check
 
 
 ## Midterm Implementations 
+#### Links to Google Colab Notebooks:
+Unsupervised Learning: https://colab.research.google.com/drive/1-Mh7KOF1stMSGIRX6y2SKhv2Z0t-MaxA?usp=sharing#scrollTo=fT2_AmgrY6BF.
+
+Data Pre-processing: https://colab.research.google.com/drive/1F6SQGwr31mf19EBiD0cALkvtX4KvWLsX#scrollTo=AhoKZqufcb8N
 
 ### Data Processesing Method Implemented
 Our motivation was to gain insights into the data structure, quality, and potential biases before performing more complex analysis. Complex analysis included cleaning the data by filtering out bad data and short texts to clarify our bias distributions. We used methods of Text Embedding and TF-IDF in our data preprocessing. Understanding these distributions helped us to make decisions about further data cleaning and modeling. Our general preprocessing pipeline looked as follows:  
