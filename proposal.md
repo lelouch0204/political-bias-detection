@@ -60,12 +60,13 @@ Accurate political bias detection has applications in media literacy, fact-check
 ***Why we chose them and what we implemented*
 ### Data Processesing Method Implemented
 Our data was pulled from a political bias dataset accessed through Kaggle. We first inspected the contents counting the number of article titles and links. Of the total 8112 titles and 8100 links, we found 6021 and 5461 being unique, repectively. The articles in this dataset were split by atributes of text, source, and bias. 
-we then filtered the articles to exclude rows with irrelevant text that would not be useful in our model training, and ordering our texts by length. 
-### Machine Learning Algorithms/Models
+We then filtered the articles to exclude rows with irrelevant text that would not be useful in our model training, and ordering our texts by length. 
+### Machine Learning Algorithms/Models Implemented
+We implemented our unsupervised learning method and set up the pipeline for our supervised learning method. 
 
 ---
 
-## Discussion
+## Results and Discussion
 ---
 
 ### Quantitative Metrics
@@ -85,7 +86,7 @@ Our goal is to predict biases towards political ideologies by using text classif
 - Unsupervised ECFD clusters evaluated with silhouette scores, Adjusted Rand Index, and human evaluation for interpretability. 
 - Insightful narratives showing selective coverage and framing differences across outlets. 
 
-## Results
+## Midterm Results and Discussion
 *discussion of finding here*
 
 ### Visualizations
