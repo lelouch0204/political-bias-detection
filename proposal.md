@@ -211,6 +211,10 @@ We analyzed all our visualized clustering algorithms by conducting an evaluation
 
 #### Results
 
+From the clustering evaluation metrics shown below, we can see that together with the results of the graph and the heatmap, DBSCAN, HDBSCAN, and Mean Shift had some of the highest overall performances across the quality metrics.
+They show to perform well in Calinski-Harabasz, Completeness, Davies-Bouldin, and Fowlkes-Mallows, with DBSCAN and HDBSCAN showing strong scores and handling cluster density well. 
+We found that Agglomerative, GMM, and Birch had the lowest performance across metrics, showing poorer clustering for our bias data. To conclude, as we move forward, DBSCAN, HDBSCAN and Mean Shift are the best performing algorithms and will be prioritized in further modeling for our project. 
+
 ![Figure 12](/assets/images/imagec.png){: .small-img } 
 <p class="caption"><strong>Figure 12:</strong> Clustering Evaluation Metrics</p>
 ![Figure 13](/assets/images/imaged.png){: .small-img } 
