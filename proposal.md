@@ -261,11 +261,6 @@ Our project introduces several novel components beyond standard bias classificat
 3. **Generative de-biasing**: Fine-tune an LLM to generate a de-biased version of an article. 
 
 ---
-## Gantt Chart
-*chart here*
-## Contributions 
-
-![Figure 12](/assets/images/image.png)
 
 ## References
 
