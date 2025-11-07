@@ -37,14 +37,15 @@ Accurate political bias detection has applications in media literacy, fact-check
 
 ## Methods
 
-### Data Preprocessing Methods
+### Data Preprocessing Methods Proposed
 
 1. Deduplication, Text Normalization, Tokenization & Stopword Handling, Lemmatization/Stemming, Handling Noise and Class Balance 
 2. **TF-IDF**: Idenitfy keywords that are dense within a group of articles but uncommon across all documents. Provides an initial signal for clustering articles by orientation. 
 3. **Contextual Embeddings**: BERT produced vector representations of articles that preserve semantic meaning, forming features for our main analysis. 
 4. **DAPT (Domain Adaptive Pre-training)**: Fine-tune BERT to adapt to political data to capture vocabulary and discourse nuances. 
 
-### Machine Learning Algorithms/Models
+### Machine Learning Algorithms/Models Proposed
+
 
 #### Supervised
 
@@ -55,9 +56,17 @@ Accurate political bias detection has applications in media literacy, fact-check
 1. **Baseline**: K-Means (K=3), GMM, Hierarchical Clustering, DBScan, Spectral Clustering  
 2. **SimCSE (Ambitious)**: Use contrastive learning for sentence embeddings to robust text representations, clustering semantically similar sentences and capturing fine-grained political bias cues with a triplet loss function 
 
+## Midterm Implementations 
+***Why we chose them and what we implemented*
+### Data Processesing Method Implemented
+Our data was pulled from a political bias dataset accessed through Kaggle. We first inspected the contents counting the number of article titles and links. Of the total 8112 titles and 8100 links, we found 6021 and 5461 being unique, repectively. The articles in this dataset were split by atributes of text, source, and bias. 
+we then filtered the articles to exclude rows with irrelevant text that would not be useful in our model training, and ordering our texts by length. 
+### Machine Learning Algorithms/Models
+
 ---
 
-## Results and Discussion
+## Discussion
+---
 
 ### Quantitative Metrics
 
@@ -76,6 +85,12 @@ Our goal is to predict biases towards political ideologies by using text classif
 - Unsupervised ECFD clusters evaluated with silhouette scores, Adjusted Rand Index, and human evaluation for interpretability. 
 - Insightful narratives showing selective coverage and framing differences across outlets. 
 
+## Results
+*discussion of finding here*
+
+### Visualizations
+*Visualizations here
+
 ---
 ## Novelty Ideas 
 
@@ -86,6 +101,10 @@ Our project introduces several novel components beyond standard bias classificat
 3. **Generative de-biasing**: Fine-tune an LLM to generate a de-biased version of an article. 
 
 ---
+## Gantt Chart
+*chart here*
+## Contributions 
+*table here* 
 
 ## References
 
