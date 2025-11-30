@@ -2,3 +2,9 @@ _site/
 .jekyll-cache/
 Gemfile.lock
 .vscode/
+**/slurm_logs/
+**/__pycache__/
+*.pyc
+.DS_Store
+.env
+**/.experiments/

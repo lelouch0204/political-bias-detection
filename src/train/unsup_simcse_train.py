@@ -4,10 +4,10 @@ import math
 import torch
 import torch.nn.functional as F
 from torch.utils.data import DataLoader
+from torch.optim import AdamW
 from transformers import (
     AutoTokenizer,
     AutoModel,
-    AdamW,
     get_linear_schedule_with_warmup,
 )
 from datasets import load_dataset
@@ -30,6 +30,15 @@ def parse_args():
     p.add_argument("--tau", type=float, default=0.05)
     p.add_argument("--device", type=str, default="cuda")
     p.add_argument("--accum_steps", type=int, default=1)
+    p.add_argument(
+        "--use_cls", action="store_true", help="use [CLS] pooling instead of mean"
+    )
+    p.add_argument(
+        "--proj_dim",
+        type=int,
+        default=0,
+        help="projection head dim; 0 disables (use encoder output directly)",
+    )
     return p.parse_args()
 
 
@@ -56,6 +65,10 @@ def mean_pooling(token_embeds, attn_mask):
     summed = (token_embeds * attn_mask).sum(1)
     counts = attn_mask.sum(1).clamp(min=1e-9)
     return summed / counts
+
+
+def cls_pooling(token_embeds):
+    return token_embeds[:, 0]
 
 
 def simcse_loss(embeddings, tau):
@@ -85,10 +98,23 @@ def main():
     model = AutoModel.from_pretrained(args.model_name).to(device)
     model.train()
 
+    # Optional projection head improves contrastive learning stability
+    proj = None
+    if args.proj_dim and args.proj_dim > 0:
+        hidden = model.config.hidden_size
+        proj = torch.nn.Sequential(
+            torch.nn.Linear(hidden, args.proj_dim),
+            torch.nn.Tanh(),
+            torch.nn.Linear(args.proj_dim, args.proj_dim),
+        ).to(device)
+
     dataloader = build_dataloader(
         args.train_file, tokenizer, args.max_length, args.batch_size
     )
-    optimizer = AdamW(model.parameters(), lr=args.lr)
+    params = list(model.parameters()) + (
+        list(proj.parameters()) if proj is not None else []
+    )
+    optimizer = AdamW(params, lr=args.lr, weight_decay=0.01)
     total_steps = len(dataloader) * args.epochs // args.accum_steps
     scheduler = get_linear_schedule_with_warmup(
         optimizer,
@@ -112,7 +138,11 @@ def main():
                 return_dict=True,
             )
             last1 = out1.last_hidden_state  # (B, L, d)
-            emb1 = mean_pooling(last1, attn_mask)  # (B, d)
+            emb1 = (
+                cls_pooling(last1) if args.use_cls else mean_pooling(last1, attn_mask)
+            )  # (B, d)
+            if proj is not None:
+                emb1 = proj(emb1)
 
             # Forward pass 2 (dropout different)
             out2 = model(
@@ -122,7 +152,11 @@ def main():
                 return_dict=True,
             )
             last2 = out2.last_hidden_state
-            emb2 = mean_pooling(last2, attn_mask)
+            emb2 = (
+                cls_pooling(last2) if args.use_cls else mean_pooling(last2, attn_mask)
+            )
+            if proj is not None:
+                emb2 = proj(emb2)
 
             embeddings = torch.cat([emb1, emb2], dim=0)  # (2B, d)
             loss = simcse_loss(embeddings, args.tau)
