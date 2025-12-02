@@ -341,6 +341,7 @@ Given the class imbalance and overlapping semantics, future improvements may inc
 ## Comparison of the Models Implemented
 
 Comparison of our three Supervised Learning Methods:
+
 **1. Gaussian NB**
 
 F1-Score (weighted): 0.4486
