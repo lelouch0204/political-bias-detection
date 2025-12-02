@@ -5,7 +5,7 @@ permalink: /proposal/
 ---
 <div class="hero-section">
 	<h1>Proposal & Midterm Report</h1>
-	<blockquote>Political bias detection in news articles</blockquote>
+	<blockquote>Political Bias Detection in News Articles</blockquote>
 </div>
 
 ## Introduction and Background
@@ -58,10 +58,8 @@ Accurate political bias detection has applications in media literacy, fact-check
 ---
 
 
-## Midterm Implementations 
-#### Links to Google Colab Notebooks:
-1. [Unsupervised Learning](https://colab.research.google.com/drive/1-Mh7KOF1stMSGIRX6y2SKhv2Z0t-MaxA?usp=sharing#scrollTo=fT2_AmgrY6BF)
-2. [Data Pre-processing](https://colab.research.google.com/drive/1F6SQGwr31mf19EBiD0cALkvtX4KvWLsX#scrollTo=AhoKZqufcb8N)
+## Data Processing
+#### Google Colab Notebook: [Data Pre-processing](https://colab.research.google.com/drive/1F6SQGwr31mf19EBiD0cALkvtX4KvWLsX#scrollTo=AhoKZqufcb8N)
 
 ### Data **Process**esing Method Implemented
 Our motivation was to gain insights into the data structure, quality, and potential biases before performing more complex analysis. Complex analysis included cleaning the data by filtering out bad data and short texts to clarify our bias distributions. We used methods of Text Embedding and TF-IDF in our data preprocessing. Understanding these distributions helped us to make decisions about further data cleaning and modeling. Our general preprocessing pipeline looked as follows:  
@@ -127,9 +125,10 @@ The resulting TF-IDF value is high for words that occur often in a document but 
 
 
 ## Machine Learning Algorithms/Models Implemented
-
-
 ### Unsupervised 
+
+#### Google Colab Notebook:[Unsupervised Learning](https://colab.research.google.com/drive/1-Mh7KOF1stMSGIRX6y2SKhv2Z0t-MaxA?usp=sharing#scrollTo=fT2_AmgrY6BF)
+
 We tried several unsupervised clustering methods, including K-means clustering, GMM, density-based methods like DBSCAN, hierarchical clustering, and spectral clustering. After data loading and preprocessing to generate our text embeddings, the steps we took for the unsupervised learning methods as follows:  
 
 #### 1. Dimensionality Reduction:
@@ -139,11 +138,11 @@ Principal Component Analysis (PCA) was applied to reduce the dimensionality of t
 We visualized the categorization of our unique political bias labels by setting our number of clusters to 5. We then evaluated these clustering methods by outputting visualizations of each which will be discussed in the results.
 
 Several unsupervised clustering algorithms were initialized: 
-	- K-Means and Mini-Batch K-Means
-	- Gaussian Mixture Model (GMM) and Bayesian Gaussian Mixture Model
-	- Density-based methods: DBSCAN, HDBSCAN, OPTICS, and Mean Shift
-	- Hierarchical Clustering: Agglomerative Clustering and Birch
-	- Spectral Clustering
+- K-Means and Mini-Batch K-Means
+- Gaussian Mixture Model (GMM) and Bayesian Gaussian Mixture Model
+- Density-based methods: DBSCAN, HDBSCAN, OPTICS, and Mean Shift
+- Hierarchical Clustering: Agglomerative Clustering and Birch
+- Spectral Clustering
 
 The current status of the models is that they have been fitted and their results visualized in 2D (and one attempt in 3D), which will be discussed below. The performance metrics have been calculated and are available in the computed_metrics DataFrame. Observations have been made regarding the visualizations, and the potential impact of hyperparameters on DBSCAN and Spectral Clustering performance has been discussed. 
 
@@ -162,22 +161,50 @@ Why This Approach: This baseline establishes a performance floor using tradition
 
 Expected Performance: Macro F1 ~0.65-0.75. TF-IDF excels at identifying explicit bias markers but lacks semantic understanding for nuanced framing. 
 
-#### Learning Method 2
-Our next step is to try an advanced method which is Fine-Tuned RoBERTa. RoBERTa's pre-training on massive corpora provides rich contextual representations crucial for bias detection.
+#### Learning Method 2: Fine-Tuned RoBERTa Model
+RoBERTa's pre-training on massive corpora provides rich contextual representations crucial for bias detection. Fine tuning RoBERTa is an advanced supervised contextual classification method that helps us to move beyond static word embeddings and bag-of-words representations. Unlike general embeddings, RoBERTa generates context-sensitive representations that allows us to capture idealogical cues and common political semantic distinctions that might be more subtle in the data. 
 
 Key advantages include:  
-	- Bidirectional Context: Captures how words interact within entire sentences, detecting framing through word ordering and syntax.
-	- Transfer Learning: Pre-trained language understanding transfers to political domain with minimal fine-tuning
-	- Attention Mechanisms: Self-attention layers learn which words/phrases carry ideological signals
-	- Semantic Sensitivity: Distinguishes between "border security" vs "anti-immigrant policy"—same topic, different framing 
+- Bidirectional Context: Captures how words interact within entire sentences, detecting framing through word ordering and syntax.
+- Transfer Learning: Pre-trained language understanding transfers to political domain with minimal fine-tuning
+- Attention Mechanisms: Self-attention layers learn which words/phrases carry ideological signals
+- Semantic Sensitivity: Distinguishes between "border security" vs "anti-immigrant policy"—same topic, different framing 
+ 
+Model Architecture
+We fine-tuned the roberta base model (12 encoder layers, 768-dimensional hidden states, 12 attention heads), and extended it with a task-specific classification head consisting of a dropout layer (regularization) and a linear projection from RoBERTa’s pooled representation to five political bias logits: left, lean left, center, lean right, right. The gradients were processed through all the transformer layers to allow RoBERTa to adapt to contextual representations of the politcal catagories. 
 
-The proposed architecture is:  
-	- Base: roberta-base (125M parameters) 
-	- Fine-tuning: All layers with task-specific classification head 
-	- Training: 3 epochs, batch size 8, AdamW optimizer, learning rate warmup 
-	- Max sequence length: 512 tokens 
+Data Processing: allowing RoBERTa to learn from both surface-level linguistic patterns and deeper contextual sequences.
+- The dataset was split into 80% train; 10% validation; 10% test, preserving class balance across splits.
+- Each instance included raw text plus preprocessed versions (clean_text, lemmatized, keywords), ensuring consistent and noise-reduced inputs.
+- Labels corresponded to the five political bias categories.
+	   
+Training Configuration: Used Hugging Face Trainer API, enabling automatic logging, checkpointing, and metric tracking
+  
+Training Hyperparameters & Settings:
+| Parameter                 | Value            |
+|---------------------------|------------------|
+| Learning Rate            | 1e-5             |
+| Optimizer                | AdamW            |
+| Weight Decay             | 0.01             |
+| Num Epochs               | 3                |
+| Train Batch Size         | 4                |
+| Eval Batch Size          | 4                |
+| Evaluation Strategy       | epoch            |
+| Save Strategy            | epoch            |
+| Metric for Best Model    | validation loss  |
+| Load Best Model at End   | True             |
+| Output Directory         | ./results        |
 
-Expected Performance: We expect this to perform better, with a macro F1 ~0.80-0.88 of around. Transformer models have shown strong results on similar framing detection tasks. The attention mechanism should identify subtle narrative differences across outlets covering the same events. 
+
+Rationale for Hyperparameters
+- Small LR (1e-5): mitigates catastrophic forgetting, preserves pre-trained representations.
+- AdamW: adds decoupled weight decay, improving generalization.
+- Low batch size: driven by model size and GPU memory constraints.
+- Validation-loss based checkpointing: reduces overfitting and captures the best epoch.
+
+During training the validation loss consistently decreased, indicating successful adaptation to the classification task. 
+
+**Figure insert**
 
 ---
 
@@ -225,12 +252,12 @@ Our goal is to predict biases towards political ideologies by using text classif
 ![Figure 11](/assets/images/imageb.png){: .small-img } 
 <p class="caption"><strong>Figure 11:</strong> Spectral Clustering</p>
 
-### Analysis of our Implemented Alogirthms/Model
+
 We analyzed all our visualized clustering algorithms by conducting an evaluation of the metrics and normalizing the scores.
 - A dictionary of clustering evaluation metrics was defined, including both intrinsic (Silhouette, Calinski-Harabasz, Davies-Bouldin) and extrinsic (Adjusted Rand Index, NMI, Homogeneity, Completeness, V-Measure) metrics.
 - These metrics were computed for the labels obtained from fitting the various clustering algorithms.  
 
-#### Results
+### Unsupervised
 
 From the clustering evaluation metrics shown below, we can see that together with the results of the graph and the heatmap, DBSCAN, HDBSCAN, and Mean Shift had some of the highest overall performances across the quality metrics.
 They show to perform well in Calinski-Harabasz, Completeness, Davies-Bouldin, and Fowlkes-Mallows, with DBSCAN and HDBSCAN showing strong scores and handling cluster density well. 
@@ -241,11 +268,69 @@ We found that Agglomerative, GMM, and Birch had the lowest performance across me
 ![Figure 13](/assets/images/imaged.png){: .small-img } 
 <p class="caption"><strong>Figure 13:</strong> Clustering Evaluation Heatmap</p>
 
+### Supervised: Fine-Tuned RoBERTa Model
+
+The model was evaluated on a held-out test set after fine-tuning. We report weighted metrics to account for class imbalance in the distribution of political bias labels.
+**Overall Performance**
+| Metric               | Value   |
+|----------------------|---------|
+| Accuracy             | 0.5225  |
+| Precision (weighted) | 0.5241  |
+| Recall (weighted)    | 0.5225  |
+| F1-Score (weighted)  | 0.5112  |
+
+The results indicate moderate classification performance, with a reasonable level of agreement between precision and recall, suggesting no extreme skew toward false positives or false negatives. The F1 score shows that RoBERTa is able to capture some ideological cues, but struggles with fine-grained political distinctions.
+
+**Per-class Performance**
+| Label      | Precision | Recall | F1   | Support |
+|------------|-----------|--------|------|---------|
+| left       | 0.64      | 0.24   | 0.34 | 593     |
+| lean left  | 0.37      | 0.59   | 0.45 | 155     |
+| center     | 0.39      | 0.53   | 0.45 | 129     |
+| lean right | 0.25      | 0.89   | 0.39 | 110     |
+| right      | 0.22      | 0.18   | 0.20 | 255     |
+
+**Interpretaton of Results**
+- Left shows high precision (0.64) but low recall (0.24):
+ the model is selective when predicting "left", but misses many true cases.
+- Lean right obtained extremely high recall (0.89) but low precision (0.25):
+ the model tends to over-predict this class, capturing most true positives at the expense of false positives.
+- Right class performance is uniformly low, indicating difficulty separating strongly right-leaning content from adjacent categories.
+- Macro vs. weighted averages reflect dataset imbalance; macro averages are lower due to small-class underperformance.
+- These trends highlight semantic overlap between neighboring ideological categories and reveal weaknesses in fine-grained discrimination.
+
+The following visual diagnostics were generated to supplement raw performance metrics:
+
+**Confusion Matrix**
+- Quantifies misclassification patterns
+- Reveals systematic confusion among ideologically adjacent classes
+  
+**Figure insert**
+
+**One-vs-Rest AUROC Curves**
+- Assess ranking ability for each bias category
+- Provide a threshold-independent view of separability
+
+**Figure insert**
+
+#### Overall Analysis 
+
+The model demonstrates **moderate discriminatory ability** in predicting political bias,showing strong performance for certain categories (lean right recall, left precision). Notably, the high recall but low precision for lean right suggests threshold calibration or class-specific re-weighting may help. The fine-tuned model has difficulty with right category reflects semantic similarity with lean right and potential dataset imbalance. The performance indicates that pre-trained transformers are capable of capturing ideological signals, but fine-grained classification remains challenging.
+
+Given the class imbalance and overlapping semantics, future improvements may include:
+- Label smoothing or focal loss
+- Class-balanced sampling
+- Calibration-aware thresholding
+- Domain-adaptive pretraining on political corpora
+- Incorporating metadata (source, outlet, publication date)
+
+
 ---
 
 ### Next Steps
-- Visualize the remaining density-based clustering results (HDBSCAN, OPTICS, Mean Shift) if desired.
-- Further explore hyperparameter tuning algorithms like DBSCAN and Spectral Clustering to potentially improve clustering results.
+- Data Improvements: Balancing in the dataset by oversampling minority classes and undersampling majority classes
+- Model Improvements: Larger RoBERTa models may capture more nuances and better define catagories
+- Exploring Multi-Label classification instead of Single-Class Biases to reflect more detailed political ideals
 - Analyze the computed_metrics DataFrame to quantitatively compare the performance of the different clustering algorithms based on chosen metrics.
 - Find ways to reduce the density of the clusters and fine tune the presentation of our clusters by removing noise points
 - Based on the visualizations and metric evaluations, select the most promising unsupervised learning technique for this dataset.
