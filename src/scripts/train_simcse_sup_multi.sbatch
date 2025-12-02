@@ -1,11 +1,11 @@
 #!/bin/bash
 # SBATCH directives
 #SBATCH --job-name=train_simcse
-#SBATCH --output=slurm_logs/train_simcse_%j.out
-#SBATCH --error=slurm_logs/train_simcse_%j.err
+#SBATCH --output=slurm_logs/train_simcse_sup_%j.out
+#SBATCH --error=slurm_logs/train_simcse_sup_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
-#SBATCH --gres=gpu:H100:1
+#SBATCH --gres=gpu:H100:3
 #SBATCH --mem=32G
 #SBATCH --cpus-per-task=12
 #SBATCH --time=4:00:00
@@ -43,6 +43,12 @@ export CONDA_DIR="$HOME/scratch/miniconda"
 source "$CONDA_DIR/etc/profile.d/conda.sh"
 conda activate simcse-h100
 
+# Multi-GPU NCCL settings for single-node runs
+export NCCL_DEBUG=INFO
+export NCCL_ASYNC_ERROR_HANDLING=1
+export CUDA_VISIBLE_DEVICES=${CUDA_VISIBLE_DEVICES:-0,1,2}
+NUM_GPUS=${SLURM_GPUS_ON_NODE:-3}
+
 export PATH="${CONDA_PREFIX}/bin:${PATH}"
 
 python -c "import torch; print(f'PyTorch version: {torch.__version__}')"
@@ -50,7 +56,25 @@ echo "Python executable: $(which python)"
 echo "Python path:"
 python -c "import sys; print('\n'.join(sys.path))"
 
-python train/unsup_simcse_train.py --train_file data/political_corpus.txt --model_name roberta-base \
-  --batch_size 128 --epochs 3 --output_dir ~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs
+# python train/sup_simcse_train.py \
+#   --json_path ./data/allsides/ordinal_simcse_pairs.json \
+#   --output_dir ./.experiments/ordinal_simcse/all-mpnet-base-v2 \
+#   --model_name sentence-transformers/all-mpnet-base-v2 \
+#   --batch_size 128 \
+#   --accum_steps 8 \
+#   --lr 2e-5 \
+#   --epochs 5 \
+#   --max_len 128 \
+#   --device cuda
+
+accelerate launch train/train_ordinal_simcse_accelerate.py \
+  --json_path ./data/allsides/ordinal_simcse_pairs.json \
+  --output_dir ./.experiments/ordinal_simcse_multi/all-mpnet-base-v2 \
+  --model_name sentence-transformers/all-mpnet-base-v2 \
+  --batch_size 128 \
+  --accum_steps 8 \
+  --lr 2e-5 \
+  --epochs 20 \
+  --max_len 128 
 
 echo "Job finished"

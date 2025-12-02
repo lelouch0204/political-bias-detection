@@ -1,8 +1,8 @@
 #!/bin/bash
 # SBATCH directives
-#SBATCH --job-name=train_simcse
-#SBATCH --output=slurm_logs/train_simcse_%j.out
-#SBATCH --error=slurm_logs/train_simcse_%j.err
+#SBATCH --job-name=finetune_simcse
+#SBATCH --output=slurm_logs/finetune_simcse_%j.out
+#SBATCH --error=slurm_logs/finetune_simcse_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:H100:1
@@ -50,7 +50,25 @@ echo "Python executable: $(which python)"
 echo "Python path:"
 python -c "import sys; print('\n'.join(sys.path))"
 
-python train/unsup_simcse_train.py --train_file data/political_corpus.txt --model_name roberta-base \
-  --batch_size 128 --epochs 3 --output_dir ~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs
+# python train/finetune_allsides.py \
+#   --model_path "~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs" \
+#   --train_file "./data/allsides/dataset_train_split.pkl" \
+#   --test_file "./data/allsides/dataset_test_split.pkl" \
+#   --epochs 5 \
+#   --batch_size 128   \
+#   --lr 2e-5 \
+#   --output_dir "~/scratch/experiments/allsides_finetuned_simcse_roberta_base/_10_5_epochs_Text_len_256" \
+#   --label_col "Bias" \
+#   --text_col "Text" \
+#   --max_length 256
+
+python train/finetune_allsides.py \
+  --model_path "~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs" \
+  --dataset_name "lelouch0204/cleaned_allsides_v2.csv" \
+  --epochs 5 \
+  --batch_size 128   \
+  --lr 2e-5 \
+  --output_dir "~/scratch/experiments/allsides_finetuned_simcse_roberta_base/_10_5_epochs_updated_train_test_len_256" \
+  --max_length 256
 
 echo "Job finished"

@@ -1,8 +1,8 @@
 #!/bin/bash
 # SBATCH directives
 #SBATCH --job-name=train_simcse
-#SBATCH --output=slurm_logs/train_simcse_%j.out
-#SBATCH --error=slurm_logs/train_simcse_%j.err
+#SBATCH --output=slurm_logs/train_simcse_sup_%j.out
+#SBATCH --error=slurm_logs/train_simcse_sup_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:H100:1
@@ -50,7 +50,29 @@ echo "Python executable: $(which python)"
 echo "Python path:"
 python -c "import sys; print('\n'.join(sys.path))"
 
-python train/unsup_simcse_train.py --train_file data/political_corpus.txt --model_name roberta-base \
-  --batch_size 128 --epochs 3 --output_dir ~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs
+# python train/sup_simcse_train.py \
+#   --json_path ./data/allsides/ordinal_simcse_pairs_embed.json \
+#   --output_dir ./.experiments/ordinal_simcse_embed_20/all-mpnet-base-v2 \
+#   --model_name sentence-transformers/all-mpnet-base-v2 \
+#   --batch_size 128 \
+#   --accum_steps 8 \
+#   --lr 2e-5 \
+#   --epochs 20 \
+#   --max_len 128 \
+#   --device cuda
+
+python train/sup_simcse_train.py \
+    --json_path ./data/allsides/ordinal_simcse_pairs_embed.json \
+    --output_dir ~/scratch/.experiments/ordinal_simcse_embed_contrastive/all-mpnet-base-v2 \
+    # --model_name sentence-transformers/all-mpnet-base-v2 \
+    --batch_size 128 \
+    --accum_steps 8 \
+    --lr 2e-5 \
+    --epochs 30 \
+    --max_len 128 \
+    --device cuda \
+    --test_size 0.2 \
+    --save_every 5
+
 
 echo "Job finished"

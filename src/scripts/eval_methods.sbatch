@@ -50,7 +50,15 @@ echo "Python executable: $(which python)"
 echo "Python path:"
 python -c "import sys; print('\n'.join(sys.path))"
 
-python train/unsup_simcse_train.py --train_file data/political_corpus.txt --model_name roberta-base \
-  --batch_size 128 --epochs 3 --output_dir ~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs
+# python ./scripts/eval_methods.py \
+#   --model_path ~/scratch/experiments/setfit_updated_train_test/sentence-transformers/all-mpnet-base-v2/_1_epochs/ \
+#   --dataset_name lelouch0204/cleaned_allsides_v2.csv \
+#   --output_dir ./outputs/eval_methods/setfit_all_mpnet_base \
+#   --max_length 256
+
+python ./scripts/eval_setfit.py \
+  --model_dir ~/scratch/experiments/setfit_updated_train_test/sentence-transformers/all-mpnet-base-v2/_1_epochs \
+  --dataset_name lelouch0204/cleaned_allsides_v2.csv \
+  --output_dir ./outputs/eval_setfit_updated
 
 echo "Job finished"

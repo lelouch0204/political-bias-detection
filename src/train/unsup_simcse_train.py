@@ -158,7 +158,8 @@ def main():
             if proj is not None:
                 emb2 = proj(emb2)
 
-            embeddings = torch.cat([emb1, emb2], dim=0)  # (2B, d)
+            embeddings = torch.stack((emb1, emb2), dim=1)  # (B, 2, d)
+            embeddings = embeddings.view(-1, embeddings.size(-1))  # (2B, d)
             loss = simcse_loss(embeddings, args.tau)
             loss = loss / args.accum_steps
             loss.backward()

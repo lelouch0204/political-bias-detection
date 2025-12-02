@@ -1,14 +1,14 @@
 #!/bin/bash
 # SBATCH directives
-#SBATCH --job-name=train_simcse
-#SBATCH --output=slurm_logs/train_simcse_%j.out
-#SBATCH --error=slurm_logs/train_simcse_%j.err
+#SBATCH --job-name=gen_emb_simcse
+#SBATCH --output=slurm_logs/gen_emb_simcse_%j.out
+#SBATCH --error=slurm_logs/gen_emb_simcse_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:H100:1
 #SBATCH --mem=32G
 #SBATCH --cpus-per-task=12
-#SBATCH --time=4:00:00
+#SBATCH --time=1:00:00
 #SBATCH --mail-type=BEGIN,END,FAIL
 #SBATCH --mail-user=nparikh44@gatech.edu
 
@@ -50,7 +50,13 @@ echo "Python executable: $(which python)"
 echo "Python path:"
 python -c "import sys; print('\n'.join(sys.path))"
 
-python train/unsup_simcse_train.py --train_file data/political_corpus.txt --model_name roberta-base \
-  --batch_size 128 --epochs 3 --output_dir ~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs
+python inference/generate_embeddings.py \
+  --model_path ./.experiments/ordinal_simcse_embed_20/all-mpnet-base-v2/epoch20/ \
+  --test_pkl ./data/allsides/classifier_train.pkl \
+  --text_field clean_text \
+  --label_field Bias \
+  --batch_size 64 \
+  --output_emb ./data/allsides/embeddings/X_train_emb.npy \
+  --output_labels ./data/allsides/embeddings/y_train.pkl
 
 echo "Job finished"

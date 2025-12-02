@@ -1,8 +1,8 @@
 #!/bin/bash
 # SBATCH directives
-#SBATCH --job-name=train_simcse
-#SBATCH --output=slurm_logs/train_simcse_%j.out
-#SBATCH --error=slurm_logs/train_simcse_%j.err
+#SBATCH --job-name=setfit_allsides
+#SBATCH --output=slurm_logs/setfit_allsides_%j.out
+#SBATCH --error=slurm_logs/setfit_allsides_%j.err
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --gres=gpu:H100:1
@@ -50,7 +50,17 @@ echo "Python executable: $(which python)"
 echo "Python path:"
 python -c "import sys; print('\n'.join(sys.path))"
 
-python train/unsup_simcse_train.py --train_file data/political_corpus.txt --model_name roberta-base \
-  --batch_size 128 --epochs 3 --output_dir ~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs
+# python train/finetune_allsides.py \
+#   --model_path "~/scratch/experiments/simcse_political_unsup_roberta_base/_3_epochs" \
+#   --train_file "./data/allsides/dataset_train_split.pkl" \
+#   --test_file "./data/allsides/dataset_test_split.pkl" \
+#   --epochs 5 \
+#   --batch_size 128   \
+#   --lr 2e-5 \
+#   --output_dir "~/scratch/experiments/allsides_finetuned_simcse_roberta_base/_10_5_epochs_Text" \
+#   --label_col "Bias" \
+#   --text_col "Text"
+
+python train/train_setfit.py --wandb_project cs7641-allsides --wandb_run_name setfit-mpnet-e1
 
 echo "Job finished"

@@ -60,7 +60,7 @@ torchrun --nproc_per_node ${NUM_GPUS} train/unsup_simcse_train.py \
   --train_file data/political_corpus.txt \
   --model_name roberta-base \
   --batch_size 128 \
-  --epochs 2 \
+  --epochs 20 \
   --output_dir .experiments/simcse_political_multi_gpu \
   --use_cls \
   --proj_dim 256
