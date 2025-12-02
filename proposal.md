@@ -76,10 +76,13 @@ Our motivation was to gain insights into the data structure, quality, and potent
 
 ![Figure 1](/assets/images/image.png){: .small-img }
 <p class="caption"><strong>Figure 1:</strong> Distribution of text lengths</p>
+
 ![Figure 2](/assets/images/image2.png){: .small-img }
 <p class="caption"><strong>Figure 2:</strong> Dataset spread per category</p>
+
 ![Figure 3](/assets/images/image3.png){: .small-img }
-<p class="caption"><strong>Figure 3:</strong> Spread per source 	</p>
+<p class="caption"><strong>Figure 3:</strong> Spread per source </p>
+
 ![Figure 4](/assets/images/image4.png){: .small-img }
 <p class="caption"><strong>Figure 4:</strong> Count of each type of content per source</p>
 
@@ -204,7 +207,11 @@ Rationale for Hyperparameters
 
 During training the validation loss consistently decreased, indicating successful adaptation to the classification task. 
 
-**Figure insert**
+![Figure 5](/assets/images/SupervisedImage0.png){: .small-img }
+<p class="caption"><strong>Figure 5:</strong> Training Behavior of Fine-Tuned RoBERTa</p>
+
+![Figure 6](/assets/images/SupervisedImage1.png){: .small-img }
+<p class="caption"><strong>Figure 6:</strong> Training Behavior of Fine-Tuned RoBERTa</p>
 
 ---
 
@@ -226,20 +233,20 @@ Our goal is to predict biases towards political ideologies by using text classif
 
 ### Clustering Visualizations 
 **K-Means and Mini-Batch K-Means clustering results**: Visualized in 2D using the 2-component PCA reduced data, showing the cluster assignments and centroids. (Figure 1). The resulting clustering from K-Means shows overlapping clusters that are quite dense, indicating that there is some overlap between different political bias labels. In the future, we plan to reduce the density of the clustering and create more distinct clusters. 
-![Figure 5](/assets/images/image5.png){: .small-img } 
-<p class="caption"><strong>Figure 5:</strong> K-Means Clustering</p>
+![Figure 7](/assets/images/image5.png){: .small-img } 
+<p class="caption"><strong>Figure 7:</strong> K-Means Clustering</p>
 
 
 **Gaussian Mixture Model (GMM) Results**: Visualized in 2D, including the cluster means and covariance ellipses. 
-![Figure 6](/assets/images/image6.png){: .small-img } 
-<p class="caption"><strong>Figure 6:</strong> GMM Clustering</p>
+![Figure 8](/assets/images/image6.png){: .small-img } 
+<p class="caption"><strong>Figure 8:</strong> GMM Clustering</p>
 
 
 **Hierarchical clustering (Agglomerative and Birch) results**: visualized in 2D.  (Figure 3) A dendrogram for hierarchical clustering was generated to show the merging of clusters. (Figure 4) 
-![Figure 7](/assets/images/image7.png){: .small-img } 
-<p class="caption"><strong>Figure 7:</strong> Agglomerative Clustering</p>
-![Figure 8](/assets/images/image8.png){: .small-img } 
-<p class="caption"><strong>Figure 8:</strong> Dendogram</p>
+![Figure 9](/assets/images/image7.png){: .small-img } 
+<p class="caption"><strong>Figure 9:</strong> Agglomerative Clustering</p>
+![Figure 10](/assets/images/image8.png){: .small-img } 
+<p class="caption"><strong>Figure 10:</strong> Dendogram</p>
 
 **DBSCAN clustering results**: visualized in 2D, and a 3D attempt was made.  First, when we visualized all the points, we noticed that a majority of the points were identified as noise. (Figure 5) We then removed the noise points to just viusalize the DBSCAN clustering. (Figure 6) 
 ![Figure 9](/assets/images/image9.png){: .small-img } Figure 9. DBSCAN without noise 
@@ -305,13 +312,16 @@ The following visual diagnostics were generated to supplement raw performance me
 - Quantifies misclassification patterns
 - Reveals systematic confusion among ideologically adjacent classes
   
-**Figure insert**
+![Figure 14](/assets/images/SupervisedImage2.png){: .small-img } 
+<p class="caption"><strong>Figure 14:</strong> Confusion Matrix</p>
+
 
 **One-vs-Rest AUROC Curves**
 - Assess ranking ability for each bias category
 - Provide a threshold-independent view of separability
 
-**Figure insert**
+![Figure 15](/assets/images/SupervisedImage3.png){: .small-img } 
+<p class="caption"><strong>Figure 15:</strong> One-vs-Rest AUROC Curvess</p>
 
 #### Overall Analysis 
 
