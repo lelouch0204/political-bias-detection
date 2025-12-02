@@ -340,13 +340,39 @@ Given the class imbalance and overlapping semantics, future improvements may inc
 
 ## Comparison of the Models Implemented
 
-**need comparison here **
-...Analyze the computed_metrics DataFrame to quantitatively compare the performance of the different clustering algorithms based on chosen metrics.
+Comparison of our three Supervised Learning Methods:
+**1. Gaussian NB**
+
+F1-Score (weighted): 0.4486
+Features follow a Gaussian distribution, which is usually a poor fit for sparce data
+Too simplistic for nuanced text classification as we're assuming conditional independence between features
+
+**2. Fine-tuned RoBERTa**
+
+F1-Score (weighted): 0.8237​
+Self-attention mechanism
+Pre-trained on massive amounts of text, allowing it generate contextualized embeddings
+May not perform well on too small of a fine-tuning dataset
+
+**3. MLP with TF-IDF**
+
+F1-Score (weighted): 0.899
+TF-IDF features successfully capture term importance and differences in vocabulary of each bias group
+MLP can learn complex, non-linear relationships
+
+Thus, we can conlclude that the performance of our three supervised learning approaches shows increasing representational power acroos model architectures. The Gaussian Naive Bayes is more computationally simple, but it is limited by its dependence assumptions and the high-dimensional structure of text data. Fine-tuned RoBERTa benefited from contextualized embeddings and transformer mechanisms, achieving a substantially higher accuracy, despite being constrained by the small fine-tuning dataset. Finally, the MLP trained on TF-IDF features produced the strongest results overall, showing that even without deep contextual embeddings, an expressive classifier paired with informative lexical features can capture patterns that allow the model to distinguish between the bias catagories. The findings highlight the use of models whose inductive biases align with dataset characteristics,  combining rich lexical representations with non-linear learning offer the best performance. 
+
+Taken together, our clustering experiments demonstrate that unsupervised learning struggled to recover meaningful structure within the bias categories. Although DBSCAN, HDBSCAN, and Mean Shift showed comparatively stronger performance, especially on density-based metrics, the overall seperation of the data was weak. Thus, no method produced clusters that cleanly divided the bias labels. When viewed alongside one another, we see that supervised models outperform our other methods by learning discriminative patterns and achieve strong F1-scores. The unsupervised models revealed that these patterns are not inherently organized in the feature space in a way that clustering can easily detect. This underscores that bias categories rely on subtle linguistic cues that require advanced supervision to model effectively. Consequently, supervised learning remains far more effective for reliably distinguishing between bias labels in this dataset.
 
 ### Next Steps
-- Data Improvements: Balancing in the dataset by oversampling minority classes and undersampling majority classes
-- Model Improvements: Larger RoBERTa models may capture more nuances and better define catagories
-- Exploring Multi-Label classification instead of Single-Class Biases to reflect more detailed political ideals
+**Data Improvements:**
+Our supervised models show clear sensitivities to class imbalances with minority classes being harder to predict. We suggest balancing the dataset by oversampling minority classes and undersampling majority classes. 
+
+**Model Improvements:**
+While of fine-tuned RoBERTa model performed well, we suggest that testing larger RoBERTa models may capture more nuances and better define catagories.'
+
+**Exploring Multi-Label Classification:**
+Our current models are made to assume that each text sample expresses only one politcal bias catagory, instead of single-class biases. We can have the models rank the ideals presented in the texts using percentages such as 20% left-leaning and 80% balanced etc. to reflect more detailed political ideals
 
 ---
 ## Novelty Ideas 
