@@ -336,17 +336,17 @@ Given the class imbalance and overlapping semantics, future improvements may inc
 - Domain-adaptive pretraining on political corpora
 - Incorporating metadata (source, outlet, publication date)
 
-
 ---
+
+## Comparison of the Models Implemented
+
+**need comparison here **
+...Analyze the computed_metrics DataFrame to quantitatively compare the performance of the different clustering algorithms based on chosen metrics.
 
 ### Next Steps
 - Data Improvements: Balancing in the dataset by oversampling minority classes and undersampling majority classes
 - Model Improvements: Larger RoBERTa models may capture more nuances and better define catagories
 - Exploring Multi-Label classification instead of Single-Class Biases to reflect more detailed political ideals
-- Analyze the computed_metrics DataFrame to quantitatively compare the performance of the different clustering algorithms based on chosen metrics.
-- Find ways to reduce the density of the clusters and fine tune the presentation of our clusters by removing noise points
-- Based on the visualizations and metric evaluations, select the most promising unsupervised learning technique for this dataset.
-- Implement our supervised learning techniques which are hallow Neural Network with TF-IDF and fine-tuning RoBERTa 
 
 ---
 ## Novelty Ideas 
