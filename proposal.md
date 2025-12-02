@@ -281,17 +281,7 @@ Macro F1: 0.8728
 Weighted F1: 0.8990
 
 **Per-class Performance**
-
-| Class        | Precision | Recall | F1-Score | Support |
-|--------------|-----------|--------|----------|---------|
-| Right        | 0.96      | 0.90   | 0.93     | 255     |
-| Lean Right   | 0.90      | 0.83   | 0.86     | 110     |
-| Center       | 0.84      | 0.87   | 0.85     | 129     |
-| Lean Left    | 0.80      | 0.78   | 0.79     | 155     |
-| Left         | 0.92      | 0.95   | 0.93     | 592     |
-| **Accuracy** | —         | —      | 0.90     | 1241    |
-| **Macro Avg**| 0.88      | 0.87   | 0.87     | 1241    |
-| **Weighted Avg** | 0.90  | 0.90   | 0.90     | 1241    |
+![MLP Per-class Performance](/assets/images/mlp_per_class.png){: .small-img } 
 
 **Interpretaton of Results**
 The model performed strongest on the extreme categories (Right and Left), achieving F1-scores of 0.93 for both. Its primary area of confusion occurred within the centrist categories (Lean Left and Center), with Lean Left having the lowest Macro F1-score (0.79). This high performance suggests that TF-IDF successfully extracted highly discriminative features that separated the political vocabularies.
