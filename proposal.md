@@ -183,20 +183,7 @@ Data Processing: allowing RoBERTa to learn from both surface-level linguistic pa
 	   
 Training Configuration: Used Hugging Face Trainer API, enabling automatic logging, checkpointing, and metric tracking
   
-Training Hyperparameters & Settings:
-| Parameter                 | Value            |
-|---------------------------|------------------|
-| Learning Rate            | 1e-5             |
-| Optimizer                | AdamW            |
-| Weight Decay             | 0.01             |
-| Num Epochs               | 3                |
-| Train Batch Size         | 4                |
-| Eval Batch Size          | 4                |
-| Evaluation Strategy       | epoch            |
-| Save Strategy            | epoch            |
-| Metric for Best Model    | validation loss  |
-| Load Best Model at End   | True             |
-| Output Directory         | ./results        |
+![Figure 16](/assets/images/SuperTable1.png){: .small-img }
 
 
 Rationale for Hyperparameters
@@ -279,23 +266,14 @@ We found that Agglomerative, GMM, and Birch had the lowest performance across me
 
 The model was evaluated on a held-out test set after fine-tuning. We report weighted metrics to account for class imbalance in the distribution of political bias labels.
 **Overall Performance**
-| Metric               | Value   |
-|----------------------|---------|
-| Accuracy             | 0.5225  |
-| Precision (weighted) | 0.5241  |
-| Recall (weighted)    | 0.5225  |
-| F1-Score (weighted)  | 0.5112  |
+
+![Figure 17](/assets/images/SuperTable2.png){: .small-img }
 
 The results indicate moderate classification performance, with a reasonable level of agreement between precision and recall, suggesting no extreme skew toward false positives or false negatives. The F1 score shows that RoBERTa is able to capture some ideological cues, but struggles with fine-grained political distinctions.
 
 **Per-class Performance**
-| Label      | Precision | Recall | F1   | Support |
-|------------|-----------|--------|------|---------|
-| left       | 0.64      | 0.24   | 0.34 | 593     |
-| lean left  | 0.37      | 0.59   | 0.45 | 155     |
-| center     | 0.39      | 0.53   | 0.45 | 129     |
-| lean right | 0.25      | 0.89   | 0.39 | 110     |
-| right      | 0.22      | 0.18   | 0.20 | 255     |
+
+![Figure 17](/assets/images/SuperTable3.png){: .small-img }
 
 **Interpretaton of Results**
 - Left shows high precision (0.64) but low recall (0.24):
