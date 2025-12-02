@@ -217,6 +217,7 @@ Our goal is to predict biases towards political ideologies by using text classif
 3. **Explainability Metrics**: Shapley Additive Explanations (SHAP) Values, Integrated Gradients, LIME, Attention Visualization 
 4. **Clustering Metrics**: Silhouette Score, Normalized Mutual Information (NMI), Adjusted Rand Index (ARI), Class Balance Checks, Expected Calibration Error (ECE) 
 
+## Unsupervised
 ### Clustering Visualizations 
 **K-Means and Mini-Batch K-Means clustering results**: Visualized in 2D using the 2-component PCA reduced data, showing the cluster assignments and centroids. (Figure 1). The resulting clustering from K-Means shows overlapping clusters that are quite dense, indicating that there is some overlap between different political bias labels. In the future, we plan to reduce the density of the clustering and create more distinct clusters. 
 ![Figure 7](/assets/images/image5.png){: .small-img } 
@@ -250,8 +251,6 @@ We analyzed all our visualized clustering algorithms by conducting an evaluation
 - A dictionary of clustering evaluation metrics was defined, including both intrinsic (Silhouette, Calinski-Harabasz, Davies-Bouldin) and extrinsic (Adjusted Rand Index, NMI, Homogeneity, Completeness, V-Measure) metrics.
 - These metrics were computed for the labels obtained from fitting the various clustering algorithms.  
 
-### Unsupervised
-
 From the clustering evaluation metrics shown below, we can see that together with the results of the graph and the heatmap, DBSCAN, HDBSCAN, and Mean Shift had some of the highest overall performances across the quality metrics.
 They show to perform well in Calinski-Harabasz, Completeness, Davies-Bouldin, and Fowlkes-Mallows, with DBSCAN and HDBSCAN showing strong scores and handling cluster density well. 
 We found that Agglomerative, GMM, and Birch had the lowest performance across metrics, showing poorer clustering for our bias data. To conclude, as we move forward, DBSCAN, HDBSCAN and Mean Shift are the best performing algorithms and will be prioritized in further modeling for our project. 
@@ -261,7 +260,7 @@ We found that Agglomerative, GMM, and Birch had the lowest performance across me
 ![Figure 13](/assets/images/imaged.png){: .small-img } 
 <p class="caption"><strong>Figure 13:</strong> Clustering Evaluation Heatmap</p>
 
-### Supervised: Multi-Layer Perceptron (MLP) with TF-IDF Features
+## Supervised: Multi-Layer Perceptron (MLP) with TF-IDF Features
 The first method established a strong baseline using traditional machine learning techniques optimized for text classification.
 
 Feature Extraction: Textual data was transformed using Term Frequency-Inverse Document Frequency (TF-IDF). This technique assigns weights to words based on their frequency in a document relative to their frequency across the entire corpus, prioritizing terms with high discriminative power.
@@ -292,7 +291,7 @@ The model performed strongest on the extreme categories (Right and Left), achiev
 <p class="caption"><strong>Figure 14:</strong> MLP Confusion Matrix</p>
 
 
-### Supervised: Fine-Tuned RoBERTa Model
+## Supervised: Fine-Tuned RoBERTa Model
 
 The model was evaluated on a held-out test set after fine-tuning. We report weighted metrics to account for class imbalance in the distribution of political bias labels. The results indicate moderate classification performance, with a reasonable level of agreement between precision and recall, suggesting no extreme skew toward false positives or false negatives. The F1 score shows that RoBERTa is able to capture some ideological cues, but struggles with fine-grained political distinctions.
 
