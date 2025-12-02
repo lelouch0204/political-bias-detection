@@ -37,26 +37,30 @@ Accurate political bias detection has applications in media literacy, fact-check
 
 ## Methods
 
-### Data Preprocessing Methods Proposed
+### Data Preprocessing Methods
 
 1. Deduplication, Text Normalization, Tokenization & Stopword Handling, Lemmatization/Stemming, Handling Noise and Class Balance 
 2. **TF-IDF**: Idenitfy keywords that are dense within a group of articles but uncommon across all documents. Provides an initial signal for clustering articles by orientation. 
 3. **Contextual Embeddings**: BERT produced vector representations of articles that preserve semantic meaning, forming features for our main analysis. 
 4. **DAPT (Domain Adaptive Pre-training)**: Fine-tune BERT to adapt to political data to capture vocabulary and discourse nuances. 
 
-### Machine Learning Algorithms/Models Proposed
+### Machine Learning Implementations Overview
 
 #### Supervised
 
-1. **Baseline**: Shallow Deep Neural Architecture: Shallow NN/LSTM with TF-IDF inputs. A softmax layer outputs probabilities for Left, Center, or Right. 
-2. **Realistic**: Fine-tuned RoBERTa, DoBERTa model trained on labeled political articles to directly predict orientation. Paper by Jiang mentions motivations for political ideology detection in news articles using BERT [5]
+1. Gaussian NB: Sentence BERT (all-MiniLM-L6-v2)  embeddings followed by PCA to recover 91% variance
+2. Fine-tuned RoBERTa model trained on labeled political articles to directly predict orientation. Paper by Jiang mentions motivations for political ideology detection in news articles using BERT [5]
+3. MLP with TF-IDF: Assigns weights to words based on their frequency in a document relative to their frequency across the entire corpus.
 
 #### Unsupervised
-1. **Baseline**: K-Means (K=3), GMM, Hierarchical Clustering, DBScan, Spectral Clustering  
-2. **SimCSE (Ambitious)**: Use contrastive learning for sentence embeddings to robust text representations, clustering semantically similar sentences and capturing fine-grained political bias cues with a triplet loss function 
+We implemented several **clustering** techniques:
+- K-Means & Mini-Batch K-Means
+- Gaussian Mixture Model (GMM) and Bayesian Gaussian Mixture Model
+- Density-based methods: DBSCAN, HDBSCAN, OPTICS, & Mean Shift
+- Hierarchical Clustering: Agglomerative Clustering & Birch
+- Spectral Clustering
 
 ---
-
 
 ## Data Processing
 #### Google Colab Notebook: [Data Pre-processing](https://colab.research.google.com/drive/1F6SQGwr31mf19EBiD0cALkvtX4KvWLsX#scrollTo=AhoKZqufcb8N)
@@ -228,7 +232,6 @@ Our goal is to predict biases towards political ideologies by using text classif
 ![Figure 8](/assets/images/image6.png){: .small-img } 
 <p class="caption"><strong>Figure 8:</strong> GMM Clustering</p>
 
-
 **Hierarchical clustering (Agglomerative and Birch) results**: visualized in 2D.  (Figure 3) A dendrogram for hierarchical clustering was generated to show the merging of clusters. (Figure 4) 
 ![Figure 9](/assets/images/image7.png){: .small-img } 
 <p class="caption"><strong>Figure 9:</strong> Agglomerative Clustering</p>
@@ -327,7 +330,7 @@ The model was evaluated on a held-out test set after fine-tuning. We report weig
 
 #### Overall Analysis 
 
-The model demonstrates **moderate discriminatory ability** in predicting political bias,showing strong performance for certain categories (lean right recall, left precision). Notably, the high recall but low precision for lean right suggests threshold calibration or class-specific re-weighting may help. The fine-tuned model has difficulty with right category reflects semantic similarity with lean right and potential dataset imbalance. The performance indicates that pre-trained transformers are capable of capturing ideological signals, but fine-grained classification remains challenging.
+The model demonstrates **moderate discriminatory ability** in predicting political bias, showing strong performance for certain categories (lean right recall, left precision). Notably, the high recall but low precision for lean right suggests threshold calibration or class-specific re-weighting may help. The fine-tuned model has difficulty with right category reflects semantic similarity with lean right and potential dataset imbalance. The performance indicates that pre-trained transformers are capable of capturing ideological signals, but fine-grained classification remains challenging.
 
 Given the class imbalance and overlapping semantics, future improvements may include:
 - Label smoothing or focal loss
@@ -340,7 +343,7 @@ Given the class imbalance and overlapping semantics, future improvements may inc
 
 ## Comparison of the Models Implemented
 
-Comparison of our three Supervised Learning Methods:
+Comparison of our Supervised Learning Methods:
 
 **1. Gaussian NB**
 
