@@ -4,7 +4,7 @@ title: ML Midterm Report
 permalink: /proposal/
 ---
 <div class="hero-section">
-	<h1>Proposal & Midterm Report</h1>
+	<h1>Proposal & Final Report</h1>
 	<blockquote>Political Bias Detection in News Articles</blockquote>
 </div>
 
@@ -150,8 +150,8 @@ Several unsupervised clustering algorithms were initialized:
 The current status of the models is that they have been fitted and their results visualized in 2D (and one attempt in 3D), which will be discussed below. The performance metrics have been calculated and are available in the computed_metrics DataFrame. Observations have been made regarding the visualizations, and the potential impact of hyperparameters on DBSCAN and Spectral Clustering performance has been discussed. 
 
 ### Supervised
-#### Learning Method 1
-We are currently working on using the pre-processed TF-IDF vectors to do supervised learning. Our model architecture is a Shallow Neural Network with TF-IDF. 
+#### Learning Method 1: Multi-Layer Perceptron (MLP) with TF-IDF Features
+We used pre-processed TF-IDF vectors for this method of supervised learning. Our model architecture is a Shallow Neural Network with TF-IDF. 
 Implementation: sklearn.neural_network.MLPClassifier with hidden layers (256, 128), Adam optimizer, early stopping.
 
 Architecture: 
@@ -167,7 +167,7 @@ Expected Performance: Macro F1 ~0.65-0.75. TF-IDF excels at identifying explicit
 #### Learning Method 2: Fine-Tuned RoBERTa Model
 RoBERTa's pre-training on massive corpora provides rich contextual representations crucial for bias detection. Fine tuning RoBERTa is an advanced supervised contextual classification method that helps us to move beyond static word embeddings and bag-of-words representations. Unlike general embeddings, RoBERTa generates context-sensitive representations that allows us to capture idealogical cues and common political semantic distinctions that might be more subtle in the data. 
 
-Key advantages include:  
+Key Advantages: 
 - Bidirectional Context: Captures how words interact within entire sentences, detecting framing through word ordering and syntax.
 - Transfer Learning: Pre-trained language understanding transfers to political domain with minimal fine-tuning
 - Attention Mechanisms: Self-attention layers learn which words/phrases carry ideological signals
@@ -175,13 +175,12 @@ Key advantages include:
  
 Model Architecture
 We fine-tuned the roberta base model (12 encoder layers, 768-dimensional hidden states, 12 attention heads), and extended it with a task-specific classification head consisting of a dropout layer (regularization) and a linear projection from RoBERTa’s pooled representation to five political bias logits: left, lean left, center, lean right, right. The gradients were processed through all the transformer layers to allow RoBERTa to adapt to contextual representations of the politcal catagories. 
+For configuration we used Hugging Face Trainer API, enabling automatic logging, checkpointing, and metric tracking.
 
 Data Processing: allowing RoBERTa to learn from both surface-level linguistic patterns and deeper contextual sequences.
 - The dataset was split into 80% train; 10% validation; 10% test, preserving class balance across splits.
 - Each instance included raw text plus preprocessed versions (clean_text, lemmatized, keywords), ensuring consistent and noise-reduced inputs.
 - Labels corresponded to the five political bias categories.
-	   
-Training Configuration: Used Hugging Face Trainer API, enabling automatic logging, checkpointing, and metric tracking
   
 ![Figure 16](/assets/images/SuperTable1.png){: .small-img }
 
@@ -192,7 +191,7 @@ Rationale for Hyperparameters
 - Low batch size: driven by model size and GPU memory constraints.
 - Validation-loss based checkpointing: reduces overfitting and captures the best epoch.
 
-During training the validation loss consistently decreased, indicating successful adaptation to the classification task. 
+Result: During training the validation loss consistently decreased, indicating successful adaptation to the classification task. 
 
 ![Figure 5](/assets/images/SupervisedImage0.png){: .small-img }
 <p class="caption"><strong>Figure 5:</strong> Training Behavior of Fine-Tuned RoBERTa</p>
@@ -267,8 +266,7 @@ The first method established a strong baseline using traditional machine learnin
 
 Feature Extraction: Textual data was transformed using Term Frequency-Inverse Document Frequency (TF-IDF). This technique assigns weights to words based on their frequency in a document relative to their frequency across the entire corpus, prioritizing terms with high discriminative power.
 - Parameters: Max features were limited to 5,000, with min_df=2 and max_df=0.95, utilizing unigrams and bigrams (ngram_range=(1, 2)).
-
-Classifier: A Multi-Layer Perceptron (MLP) (a feed-forward neural network) was used.
+- Classifier: A Multi-Layer Perceptron (MLP) (a feed-forward neural network) was used.
 - Hidden Layers: The network consisted of two hidden layers with sizes (256, 128), utilizing the ReLU activation function.
 - Training: The Adam optimizer was used with an adaptive learning rate and a batch size of 32. Early stopping with a validation fraction of 0.1 was implemented to prevent overfitting.
 
@@ -296,27 +294,22 @@ The model performed strongest on the extreme categories (Right and Left), achiev
 
 ### Supervised: Fine-Tuned RoBERTa Model
 
-The model was evaluated on a held-out test set after fine-tuning. We report weighted metrics to account for class imbalance in the distribution of political bias labels.
+The model was evaluated on a held-out test set after fine-tuning. We report weighted metrics to account for class imbalance in the distribution of political bias labels. The results indicate moderate classification performance, with a reasonable level of agreement between precision and recall, suggesting no extreme skew toward false positives or false negatives. The F1 score shows that RoBERTa is able to capture some ideological cues, but struggles with fine-grained political distinctions.
+
 **Overall Performance**
 
 ![Figure 17](/assets/images/SuperTable2.png){: .small-img }
-
-The results indicate moderate classification performance, with a reasonable level of agreement between precision and recall, suggesting no extreme skew toward false positives or false negatives. The F1 score shows that RoBERTa is able to capture some ideological cues, but struggles with fine-grained political distinctions.
 
 **Per-class Performance**
 
 ![Figure 17](/assets/images/SuperTable3.png){: .small-img }
 
 **Interpretaton of Results**
-- Left shows high precision (0.64) but low recall (0.24):
- the model is selective when predicting "left", but misses many true cases.
-- Lean right obtained extremely high recall (0.89) but low precision (0.25):
- the model tends to over-predict this class, capturing most true positives at the expense of false positives.
+- Left shows high precision (0.64) but low recall (0.24): the model is selective when predicting "left", but misses some true cases.
+- Lean right obtained extremely high recall (0.89) but low precision (0.25): the model over-predicts this class, capturing most true positives at the expense of false positives.
 - Right class performance is uniformly low, indicating difficulty separating strongly right-leaning content from adjacent categories.
-- Macro vs. weighted averages reflect dataset imbalance; macro averages are lower due to small-class underperformance.
+- Macro vs. weighted averages reflect dataset imbalance: macro averages are lower due to small-class underperformance.
 - These trends highlight semantic overlap between neighboring ideological categories and reveal weaknesses in fine-grained discrimination.
-
-The following visual diagnostics were generated to supplement raw performance metrics:
 
 **Confusion Matrix**
 - Quantifies misclassification patterns
