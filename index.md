@@ -57,17 +57,17 @@ Find the detailed contribution table and Gantt chart <strong><a href="https://gt
 </tr>
 <tr>
 <td>🤖 <strong>Model Development</strong></td>
-<td class="status-warning">🔄 In Progress</td>
+<td class="status-success">✅ Completed</td>
 <td>Implementing ML algorithms</td>
 </tr>
 <tr>
 <td>📈 <strong>Evaluation</strong></td>
-<td class="status-warning">🔄 In Progress</td>
+<td class="status-success">✅ Completed</td>
 <td>Performance analysis and comparison</td>
 </tr>
 <tr>
 <td>📝 <strong>Documentation</strong></td>
-<td class="status-warning">🔄 In Progress</td>
+<td class="status-success">✅ Completed</td>
 <td>Comprehensive project documentation</td>
 </tr>
 </tbody>
@@ -94,10 +94,10 @@ Find the detailed contribution table and Gantt chart <strong><a href="https://gt
 
 <div class="nav-card">
 
-<h3>📖 Project Proposal & Report</h3>
-<p><strong><a href="proposal/">View Proposal and Report</a></strong></p>
+<h3>📖 Project Final Report</h3>
+<p><strong><a href="proposal/">View Final Report</a></strong></p>
 
-<p>Complete project proposal and progress report including:</p>
+<p>Complete project report including:</p>
 <ul>
 <li>Literature review and background</li>
 <li>Problem definition and motivation</li>
@@ -128,7 +128,7 @@ Find the detailed contribution table and Gantt chart <strong><a href="https://gt
 
 ## 🚀 Getting Started
 
-1. **Review the [proposal and progress report](proposal/)** to understand our methodology
+1. **Review the [proposal and final report](proposal/)** to understand our methodology
 2. **Check out our <a href="https://github.gatech.edu/nparikh44/cs-7641-group-29" target="_blank">GitHub Repository</a>** for source code
 
 ---
