@@ -262,6 +262,48 @@ We found that Agglomerative, GMM, and Birch had the lowest performance across me
 ![Figure 13](/assets/images/imaged.png){: .small-img } 
 <p class="caption"><strong>Figure 13:</strong> Clustering Evaluation Heatmap</p>
 
+### Supervised: Multi-Layer Perceptron (MLP) with TF-IDF Features
+The first method established a strong baseline using traditional machine learning techniques optimized for text classification.
+
+Feature Extraction: Textual data was transformed using Term Frequency-Inverse Document Frequency (TF-IDF). This technique assigns weights to words based on their frequency in a document relative to their frequency across the entire corpus, prioritizing terms with high discriminative power.
+- Parameters: Max features were limited to 5,000, with min_df=2 and max_df=0.95, utilizing unigrams and bigrams (ngram_range=(1, 2)).
+
+Classifier: A Multi-Layer Perceptron (MLP) (a feed-forward neural network) was used.
+- Hidden Layers: The network consisted of two hidden layers with sizes (256, 128), utilizing the ReLU activation function.
+- Training: The Adam optimizer was used with an adaptive learning rate and a batch size of 32. Early stopping with a validation fraction of 0.1 was implemented to prevent overfitting.
+
+
+**Overall Performance**
+
+MLP Results:
+Accuracy: 0.8993
+Macro F1: 0.8728
+Weighted F1: 0.8990
+
+**Per-class Performance**
+
+| Class        | Precision | Recall | F1-Score | Support |
+|--------------|-----------|--------|----------|---------|
+| Right        | 0.96      | 0.90   | 0.93     | 255     |
+| Lean Right   | 0.90      | 0.83   | 0.86     | 110     |
+| Center       | 0.84      | 0.87   | 0.85     | 129     |
+| Lean Left    | 0.80      | 0.78   | 0.79     | 155     |
+| Left         | 0.92      | 0.95   | 0.93     | 592     |
+| **Accuracy** | —         | —      | 0.90     | 1241    |
+| **Macro Avg**| 0.88      | 0.87   | 0.87     | 1241    |
+| **Weighted Avg** | 0.90  | 0.90   | 0.90     | 1241    |
+
+**Interpretaton of Results**
+The model performed strongest on the extreme categories (Right and Left), achieving F1-scores of 0.93 for both. Its primary area of confusion occurred within the centrist categories (Lean Left and Center), with Lean Left having the lowest Macro F1-score (0.79). This high performance suggests that TF-IDF successfully extracted highly discriminative features that separated the political vocabularies.
+
+**Confusion Matrix**
+- Quantifies misclassification patterns
+- Reveals systematic confusion among ideologically adjacent classes
+  
+![Figure 14](/assets/images/mlp_confusion_matrix.png){: .small-img } 
+<p class="caption"><strong>Figure 14:</strong> MLP Confusion Matrix</p>
+
+
 ### Supervised: Fine-Tuned RoBERTa Model
 
 The model was evaluated on a held-out test set after fine-tuning. We report weighted metrics to account for class imbalance in the distribution of political bias labels.
