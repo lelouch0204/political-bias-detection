@@ -381,13 +381,179 @@ Our current models are made to assume that each text sample expresses only one p
 ---
 ## Novelty Ideas 
 
-Our project introduces several novel components beyond standard bias classification: 
+### Methods Overview
 
-1. **Event-Level Contrastive Learning**: Use contrastive learning on articles about the same event to detect nuanced narrative differences (e.g. triplet loss) across outlets. 
-2. **Explainable and interpretable predictions**: Using model interpretability tools, we provide reasoning for each classification, highlighting which textual features and coverage decisions influenced the bias label; focusing on tone, selection, percentage of fact vs. opinion, and size biases. 
-3. **Generative de-biasing**: Fine-tune an LLM to generate a de-biased version of an article. 
+We implemented two novel contrastive learning approaches to enhance political bias detection:
+
+**SimCSE (Simple Contrastive Learning of Sentence Embeddings)**: This approach uses "Dropout as Data Augmentation" to create positive pairs from the same sentence without requiring external labels. By optimizing for **Alignment** (closeness of self-pairs) and **Uniformity** (spread of all embeddings), SimCSE learns semantic structure from scratch. This unsupervised method is particularly valuable for our domain where labeled data is limited, allowing the model to capture nuanced political language patterns. [14]
+
+**SetFit (Efficient Few-Shot Learning)**: SetFit employs a "Data Amplification" technique that converts N labeled samples into N^2 contrastive pairs, maximizing learning efficiency from small datasets. The method decouples feature learning (Stage 1: Contrastive Loss) from prediction (Stage 2: Frozen Classification Head), preventing "catastrophic forgetting." This two-stage approach is well-suited for political bias detection where obtaining large amounts of labeled data across all bias categories is challenging. [13]
+
+### SimCSE Implementation
+
+#### Dataset Creation
+
+To train SimCSE effectively on political text, we constructed a specialized political corpus by aggregating data from multiple news sources. Our pipeline combines several large-scale datasets to ensure diverse coverage of political discourse:
+
+**Data Sources:**
+1. **CC-News**: We filtered articles from major political news outlets including Politico, The Hill, CNN, Fox News, New York Times, Washington Post, Breitbart, and Reuters. This ensures representation across the political spectrum.
+2. **AG News**: We extracted sentences from the "World" category (label 1), which contains political, geopolitical, and election-related content.
+3. **GDELT Events**: We selected articles tagged with political theme codes (POL, GOV, ELC, PRO) to capture government, electoral, and political protest coverage.
+
+**Preprocessing Pipeline:**
+- **Sentence Splitting**: Applied regex-based splitting on sentence boundaries (`.!?`) to create individual training examples
+- **Length Filtering**: Retained only sentences with 6+ words to ensure semantic richness
+- **Text Cleaning**: Removed newlines and excess whitespace while preserving sentence structure
+- **Deduplication**: Applied set-based deduplication to remove redundant sentences
+- **Shuffling**: Randomized sentence order to prevent dataset bias
+
+The final corpus contains over 300,000 unique political sentences, providing rich unsupervised training data for SimCSE to learn domain-specific semantic representations without requiring labeled bias annotations.
+
+#### Unsupervised Training Method
+
+Our SimCSE training implementation leverages dropout noise as the sole data augmentation mechanism, following the unsupervised SimCSE framework. The training process operates as follows:
+
+**Dual Forward Pass Architecture:**
+For each input sentence, we perform two forward passes through the same RoBERTa-base encoder with dropout enabled. Since dropout masks are randomly applied during each forward pass, the same sentence produces two slightly different representations. These form positive pairs for contrastive learning without requiring manually constructed augmentations or labeled data.
+
+**Pooling Strategy:**
+We extract sentence embeddings using mean pooling over all token representations weighted by attention masks, which empirically performs better than CLS token pooling for capturing full sentence semantics. An optional projection head (with tanh activation) can be added to improve contrastive learning stability.
+
+**Contrastive Loss Function:**
+The model optimizes an NT-Xent (Normalized Temperature-scaled Cross-Entropy) loss with temperature parameter τ = 0.05. For a batch of N sentences producing 2N embeddings, each embedding treats its dropout-augmented counterpart as the positive example while all other 2N-2 embeddings serve as negatives. This encourages:
+- **Alignment**: Embeddings from the same sentence (different dropout) should be similar
+- **Uniformity**: Embeddings should be well-distributed across the representation space
+
+**Training Configuration:**
+- Base model: RoBERTa-base (125M parameters)
+- Batch size: 128 with gradient accumulation
+- Learning rate: 2e-5 with linear warmup (10% of steps)
+- Max sequence length: 64 tokens
+- Optimizer: AdamW with weight decay 0.01
+
+This unsupervised approach allows the model to learn political text representations from unlabeled data, capturing semantic nuances of political discourse that can later be fine-tuned for bias classification tasks.
+
+#### Downstream Classification Experiments
+
+After training the SimCSE model on our political corpus, we evaluated its effectiveness for bias detection through two experimental approaches using the AllSides dataset with 5-class bias labels (Right, Lean Right, Center, Lean Left, Left):
+
+**Experiment 1: SimCSE + Logistic Regression (Frozen Embeddings)**
+
+In this approach, we froze the SimCSE encoder and extracted fixed embeddings for classification. The pipeline consisted of:
+1. Generating sentence embeddings using the trained SimCSE model (CLS token pooling)
+2. Training a logistic regression classifier with class balancing on the frozen embeddings
+3. Standard scaling applied to normalize the embedding space
+
+This experiment tests whether the unsupervised contrastive learning alone produces representations that linearly separate political biases. Results demonstrated strong performance:
+- **Accuracy**: 0.7905
+- **Macro F1**: 0.76
+- **Weighted F1**: 0.79
+
+The confusion matrix revealed the model performs well on extreme categories (Right, Left) with higher prediction confidence, while center and lean categories showed more confusion due to their semantic proximity. The multi-class ROC curves indicated strong discriminative ability across all bias classes.
+
+<div class="img-row">
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/simcse_logreg/confusion_matrix.png' | relative_url }}" alt="Figure 19: Confusion Matrix - SimCSE + Logistic Regression" />
+		<p class="caption"><strong>Figure 19:</strong> Confusion Matrix - SimCSE + Logistic Regression</p>
+	</div>
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/simcse_logreg/classification.png' | relative_url }}" alt="Figure 20: Classification Metrics per Class - SimCSE + Logistic Regression" />
+		<p class="caption"><strong>Figure 20:</strong> Classification Metrics per Class - SimCSE + Logistic Regression</p>
+	</div>
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/simcse_logreg/roc_curve.png' | relative_url }}" alt="Figure 21: Multi-class ROC Curve - SimCSE + Logistic Regression" />
+		<p class="caption"><strong>Figure 21:</strong> Multi-class ROC Curve - SimCSE + Logistic Regression</p>
+	</div>
+</div>
+
+**Experiment 2: SimCSE + Fine-tuned Classification Head**
+
+To further improve performance, we fine-tuned the RoBERTa-base encoder's classification head while keeping the pre-trained SimCSE weights as initialization. This allowed the model to adapt its representations specifically for the bias classification task while retaining the semantic structure learned during contrastive pre-training.
+
+Fine-tuning yielded substantial improvements:
+- **Accuracy**: 0.839 (+4.9% improvement)
+- **Macro F1**: 0.82 (+6% improvement)
+- **Weighted F1**: 0.84 (+5% improvement)
+
+The enhanced performance demonstrates that while SimCSE creates a strong semantic foundation through unsupervised learning, task-specific fine-tuning effectively adapts these representations for nuanced bias detection. The classification metrics per class showed more balanced performance across all five bias categories, with particular improvements in the challenging "Lean Left" and "Center" classes.
+
+<div class="img-row">
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/simcse_finetune/confusion_matrix.png' | relative_url }}" alt="Figure 19: Confusion Matrix - SimCSE + Fine-tuned Head" />
+		<p class="caption"><strong>Figure 19:</strong> Confusion Matrix - SimCSE + Fine-tuned Head</p>
+	</div>
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/simcse_finetune/classification_report_bars.png' | relative_url }}" alt="Figure 20: Classification Metrics per Class - SimCSE + Fine-tuned Head" />
+		<p class="caption"><strong>Figure 20:</strong> Classification Metrics per Class - SimCSE + Fine-tuned Head</p>
+	</div>
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/simcse_finetune/roc_curve.png' | relative_url }}" alt="Figure 21: Multi-class ROC Curve - SimCSE + Fine-tuned Head" />
+		<p class="caption"><strong>Figure 21:</strong> Multi-class ROC Curve - SimCSE + Fine-tuned Head</p>
+	</div>
+</div>
 
 ---
+
+### SetFit Implementation
+
+#### Methods Overview
+
+SetFit is a parameter-efficient few-shot classification approach that trains a lightweight sentence-transformer with a contrastive objective to generate robust embeddings using only a small number of labeled examples, then fits a simple classifier on top. It amplifies supervision by creating many positive/negative pairs from limited labeled data and converges quickly, making it ideal when labels are scarce but domain text is plentiful.
+
+#### Training Configuration
+
+Initialize a SetFit model with `sentence-transformers/all-mpnet-base-v2` as the backbone. Training uses SetFit’s pair sampling to create contrastive examples from the labeled set:
+- Batch size: 64
+- Epochs: 1 (fast convergence typical for SetFit)
+- Num iterations: 20 (pairs generated per sentence)
+- Metric: accuracy on the held-out test split
+
+#### Rationale and Results
+
+Compared to SimCSE, SetFit directly leverages labeled examples to shape the embedding space toward bias classes while keeping training lightweight. The `all-mpnet-base-v2` encoder provides strong sentence-level semantics; SetFit’s pair sampling increases supervision density without requiring large datasets. We expect competitive accuracy with fast training times and good performance on extreme classes, with centrist and “lean” classes being more challenging due to semantic proximity.
+
+Using SetFit yielded substantial improvements:
+- **Accuracy**: 0.90
+- **Macro F1**: 0.873
+- **Weighted F1**: 0.901
+
+<div class="img-row">
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/setfit/confusion_matrix.png' | relative_url }}" alt="SetFit Confusion Matrix" />
+		<p class="caption"><strong>Figure: 22</strong> Confusion Matrix - SetFit</p>
+	</div>
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/setfit/classification_report_bars.png' | relative_url }}" alt="SetFit Classification Metrics" />
+		<p class="caption"><strong>Figure: 23</strong> Classification Metrics per Class - SetFit</p>
+	</div>
+	<div class="img-item">
+		<img src="{{ '/assets/images/experiment_results/setfit/roc_curve.png' | relative_url }}" alt="SetFit ROC Curve" />
+		<p class="caption"><strong>Figure: 24</strong> Multi-class ROC Curve - SetFit</p>
+	</div>
+</div>
+
+#### Why SetFit Performs Better
+
+Our SetFit experiments achieved notably stronger results compared to the SimCSE embeddings. Key reasons for this improvement include:
+
+- **Supervised contrastive signal (label amplification):** SetFit generates N^2 contrastive pairs from N labeled examples, which greatly increases the effective supervision. This forces the encoder to pull together examples of the same bias class and push apart different classes, which is directly aligned with the classification objective.
+
+- **Task-aligned supervision vs. generic semantics:** SimCSE learns general-purpose sentence similarity using dropout augmentation and is unsupervised; it captures broad semantics but not class-discriminative signals. SetFit's supervised pair sampling sculpts the representation space specifically around bias labels, making classes more linearly separable.
+
+- **Stronger sentence encoder backbone:** We use `all-mpnet-base-v2` for SetFit, which provides higher-quality sentence representations out-of-the-box compared with a base RoBERTa encoder used in some SimCSE runs. Better base embeddings amplify the effectiveness of contrastive fine-tuning.
+
+- **Dense supervision with few labels:** Because SetFit produces many contrastive pairs per example, it achieves high sample efficiency — the model sees a rich variety of intra-class and inter-class comparisons even when labeled data is limited.
+
+- **Lightweight, stable training:** SetFit trains fast (often 1 epoch) and requires fewer updates to shape the encoder, reducing overfitting risk while still learning discriminative boundaries.
+
+These factors combine to give SetFit an advantage for our 5-way bias classification task: it directly optimizes the embedding geometry for the downstream classifier while remaining computationally efficient.
+
+**Caveats:**
+
+- SetFit’s supervised benefits depend on label quality; noisy or inconsistent labels will amplify noise as well as signal.
+- The method can still struggle with semantically ambiguous classes (e.g., "lean left" vs "center"). Additional techniques like label smoothing, hierarchical labels, or multi-task signals (topic + stance) may further help.
+
+
 
 ## References
 
@@ -414,6 +580,10 @@ Our project introduces several novel components beyond standard bias classificat
 [11] The GDELT Project, “The GDELT Project,” Kaggle.com, 2015. https://www.kaggle.com/datasets/gdelt/gdelt 
 
 [12] idiap, “GitHub - idiap/Factual-Reporting-and-Political-Bias-Web-Interactions: Mapping the Media Landscape: Predicting Factual Reporting and Political Bias,” GitHub, 2024. https://github.com/idiap/Factual-Reporting-and-Political-Bias-Web-Interactions 
+
+[13] Hugging Face, "SetFit: Efficient Few-Shot Learning", GitHub repository, 2022. https://github.com/huggingface/setfit
+
+[14] W. Gao, H. Yao, and K. Chen, "SimCSE: Simple Contrastive Learning of Sentence Embeddings," arXiv preprint arXiv:2104.08821, 2021. https://arxiv.org/abs/2104.08821
 
 ---
 
