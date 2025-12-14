@@ -110,7 +110,7 @@ Find the detailed contribution table and Gantt chart <strong><a href="https://gt
 <div class="nav-card">
 
 <h3>💻 Repository</h3>
-<p><strong><a href="https://github.gatech.edu/nparikh44/cs-7641-group-29" target="_blank">GitHub Repository</a></strong></p>
+<p><strong><a href="https://github.com/lelouch0204/political-bias-detection" target="_blank">GitHub Repository</a></strong></p>
 
 <p>Source code and additional materials:</p>
 <ul>
@@ -129,7 +129,7 @@ Find the detailed contribution table and Gantt chart <strong><a href="https://gt
 ## 🚀 Getting Started
 
 1. **Review the [proposal and final report](proposal/)** to understand our methodology
-2. **Check out our <a href="https://github.gatech.edu/nparikh44/cs-7641-group-29" target="_blank">GitHub Repository</a>** for source code
+2. **Check out our <a href="https://github.com/lelouch0204/political-bias-detection" target="_blank">GitHub Repository</a>** for source code
 
 ---
 

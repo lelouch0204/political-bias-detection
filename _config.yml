@@ -1,14 +1,14 @@
 title: CS 7641 Group 29 ML Project
 description: Machine Learning Group Project for CS 7641
 author: CS 7641 Group 29
-email: nparikh44@gatech.edu
+email: nandanbparikh@gmail.com
 
 # GitHub Pages settings
 # For your GitHub Enterprise Pages URL (https://github.gatech.edu/pages/nparikh44/cs-7641-group-29/)
-baseurl: "/pages/nparikh44/cs-7641-group-29"
-url: "https://github.gatech.edu"
+baseurl: "/political-bias-detection"
+url: "https://lelouch0204.github.io"
 
-repository: nparikh44/cs-7641-group-29
+repository: lelouch0204/political-bias-detection
 
 # Build settings
 markdown: kramdown
